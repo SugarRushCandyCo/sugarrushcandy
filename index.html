@@ -10,7 +10,7 @@
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
-        .nav-link { transition: color 0.2s ease; font-weight: 700; text-transform: uppercase; font-size: 0.875rem; }
+        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: color 0.2s; }
         .nav-link:hover { color: var(--neon-pink); }
         .btn-main { background: var(--neon-yellow); border: 3px solid var(--ink-black); padding: 15px 30px; font-weight: 800; box-shadow: 6px 6px 0px var(--ink-black); cursor: pointer; display: inline-block; text-decoration: none; color: black; }
     </style>
@@ -19,15 +19,16 @@
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
         <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         <div class="hidden md:flex items-center space-x-8">
-            <a href="/shop/" class="nav-link">Shop All</a>
-            <a href="/varietybags/" class="nav-link">Variety Bags</a>
-            <a href="/wholesale/" class="nav-link">Wholesale</a>
+            <a href="/shop" class="nav-link">Shop All</a>
+            <a href="/bags" class="nav-link">Variety Bags</a>
+            <a href="/wholesale" class="nav-link">Wholesale</a>
         </div>
-        <div class="w-8"></div> </nav>
+        <div class="w-8"></div>
+    </nav>
 
     <header class="py-32 px-6 text-center bg-blue-100 border-b-4 border-black">
         <h1 class="text-6xl md:text-9xl font-black mb-6 leading-none">CANDY FOR<br><span class="text-blue-600">THE COOL KIDS.</span></h1>
-        <a href="/shop/" class="btn-main text-2xl">ENTER THE SHOP</a>
+        <a href="/shop" class="btn-main text-2xl">ENTER THE SHOP</a>
     </header>
 </body>
 </html>
