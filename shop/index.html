@@ -7,220 +7,64 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon-pink: #ff00ff;
-            --neon-yellow: #ccff00;
-            --neon-blue: #00f0ff;
-            --ink-black: #1a1a1a;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #f0f0f0;
-            color: var(--ink-black);
-            overflow-x: hidden;
-        }
-
-        h1, h2, .brand-font {
-            font-family: 'Syne', sans-serif;
-            text-transform: uppercase;
-        }
-
-        .brutal-card {
-            background: white;
-            border: 4px solid var(--ink-black);
-            box-shadow: 8px 8px 0px var(--ink-black);
-            transition: all 0.2s ease;
-        }
-
-        .brutal-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px var(--neon-pink);
-        }
-
-        .btn-main {
-            background: var(--neon-yellow);
-            border: 3px solid var(--ink-black);
-            padding: 10px 20px;
-            font-weight: 800;
-            box-shadow: 4px 4px 0px var(--ink-black);
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-main:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0px 0px 0px var(--ink-black);
-        }
-
-        .cart-dot {
-            background: var(--neon-pink);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: white;
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            border: 2px solid var(--ink-black);
-        }
-
-        .marquee {
-            background: var(--ink-black);
-            color: white;
-            padding: 10px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
+        :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --neon-blue: #00f0ff; --ink-black: #1a1a1a; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; color: var(--ink-black); overflow-x: hidden; }
+        h1, h2, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 8px 8px 0px var(--ink-black); transition: all 0.2s ease; }
+        .brutal-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px var(--neon-blue); }
+        .btn-main { background: var(--neon-yellow); border: 3px solid var(--ink-black); padding: 10px 20px; font-weight: 800; box-shadow: 4px 4px 0px var(--ink-black); cursor: pointer; }
+        .cart-dot { background: var(--neon-pink); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; position: absolute; top: -5px; right: -10px; border: 2px solid var(--ink-black); }
     </style>
 </head>
 <body>
-
-    <div class="marquee">
-        <div class="marquee-content brand-font">
-            ⚡️ BUILD YOUR CUSTOM HAUL ⚡️ MIX & MATCH ⚡️ WORLDWIDE SHIPPING ⚡️ STAY SWEET ⚡️
-        </div>
-    </div>
-
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
-        <a href="/" class="text-3xl font-extrabold tracking-tighter brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+        <a href="../" class="text-3xl font-extrabold tracking-tighter brand-font">SUGAR<span class="text-pink-500">RUSH</span></a>
         <div class="hidden md:flex space-x-8 font-bold uppercase text-sm">
-            <a href="/shop" class="text-pink-500 underline decoration-4 underline-offset-4">Shop All</a>
-            <a href="/varietybags" class="hover:text-pink-500 transition-colors">Variety Bags</a>
-            <a href="/wholesale" class="hover:text-pink-500 transition-colors">Wholesale</a>
+            <a href="./" class="text-blue-500 underline decoration-4 underline-offset-4">Shop All</a>
+            <a href="../varietybags/" class="hover:text-pink-500">Variety Bags</a>
         </div>
         <div class="relative cursor-pointer" onclick="toggleCart()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
             <div id="cart-count" class="cart-dot">0</div>
         </div>
     </nav>
 
-    <header class="py-16 px-6 text-center border-b-4 border-black bg-yellow-50">
-        <h1 class="text-6xl md:text-8xl font-black mb-4 italic leading-none uppercase">Full<br><span class="text-pink-500">Inventory</span></h1>
-        <p class="text-xl font-bold uppercase tracking-widest max-w-2xl mx-auto">Individual treats to satisfy every craving.</p>
+    <header class="py-12 px-6 text-center border-b-4 border-black bg-white">
+        <h1 class="text-5xl md:text-7xl font-black italic">THE FULL MENU.</h1>
     </header>
 
-    <section class="py-16 px-6 max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            
-            <div class="brutal-card p-6 flex flex-col items-center text-center">
-                <div class="text-6xl mb-6">🪱</div>
-                <h3 class="text-xl font-black mb-2 uppercase">Neon Worms</h3>
-                <div class="text-2xl font-black mb-4">$4.00</div>
-                <button onclick="addToCart('Neon Worms', 4.00, event)" class="btn-main w-full">ADD TO CART</button>
-            </div>
-
-            <div class="brutal-card p-6 flex flex-col items-center text-center">
-                <div class="text-6xl mb-6">🍒</div>
-                <h3 class="text-xl font-black mb-2 uppercase">Fizzy Cherries</h3>
-                <div class="text-2xl font-black mb-4">$5.00</div>
-                <button onclick="addToCart('Fizzy Cherries', 5.00, event)" class="btn-main w-full">ADD TO CART</button>
-            </div>
-
-            <div class="brutal-card p-6 flex flex-col items-center text-center">
-                <div class="text-6xl mb-6">🧱</div>
-                <h3 class="text-xl font-black mb-2 uppercase">Sour Bricks</h3>
-                <div class="text-2xl font-black mb-4">$6.00</div>
-                <button onclick="addToCart('Sour Bricks', 6.00, event)" class="btn-main w-full">ADD TO CART</button>
-            </div>
-
-            <div class="brutal-card p-6 flex flex-col items-center text-center">
-                <div class="text-6xl mb-6">🍬</div>
-                <h3 class="text-xl font-black mb-2 uppercase">Jawbreaker</h3>
-                <div class="text-2xl font-black mb-4">$3.00</div>
-                <button onclick="addToCart('Jawbreaker', 3.00, event)" class="btn-main w-full">ADD TO CART</button>
-            </div>
-
+    <section class="py-16 px-6 max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="brutal-card p-6 flex flex-col items-center">
+            <div class="text-6xl mb-4">🪱</div>
+            <h3 class="font-black uppercase">Neon Worms</h3>
+            <p class="text-2xl font-black mb-4">$4.00</p>
+            <button onclick="addToCart('Neon Worms', 4)" class="btn-main w-full">ADD</button>
+        </div>
+        <div class="brutal-card p-6 flex flex-col items-center">
+            <div class="text-6xl mb-4">🍒</div>
+            <h3 class="font-black uppercase">Fizzy Cherries</h3>
+            <p class="text-2xl font-black mb-4">$5.00</p>
+            <button onclick="addToCart('Fizzy Cherries', 5)" class="btn-main w-full">ADD</button>
         </div>
     </section>
 
     <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-80 bg-white border-l-4 border-black translate-x-full transition-transform duration-300 z-[60] p-6 flex flex-col">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-black">YOUR HAUL</h2>
-            <button onclick="toggleCart()" class="text-3xl font-bold">&times;</button>
-        </div>
-        <div id="cart-items" class="flex-grow overflow-y-auto space-y-4"></div>
-        <div class="border-t-4 border-black pt-4 mt-4">
-            <div class="flex justify-between text-xl font-black mb-4">
-                <span>TOTAL:</span>
-                <span id="cart-total">$0.00</span>
-            </div>
-            <button class="btn-main w-full py-4 text-xl" onclick="checkout()">CHECKOUT NOW</button>
-        </div>
+        <div class="flex justify-between items-center mb-8"><h2 class="text-2xl font-black italic">HAUL</h2><button onclick="toggleCart()" class="text-3xl">&times;</button></div>
+        <div id="cart-items" class="flex-grow overflow-y-auto"></div>
+        <button class="btn-main w-full py-4 mt-4" onclick="alert('Checkout Ready!')">CHECKOUT</button>
     </div>
-
-    <footer class="py-12 border-t-4 border-black text-center font-bold">
-        <p>© 2026 SUGAR RUSH CORP. KEEP IT SWEET.</p>
-    </footer>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('sugarRushCart')) || [];
-        const cartSidebar = document.getElementById('cart-sidebar');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalDisplay = document.getElementById('cart-total');
-        const cartCountDisplay = document.getElementById('cart-count');
-
-        function toggleCart() { cartSidebar.classList.toggle('translate-x-full'); }
-
-        function addToCart(name, price, event) {
-            cart.push({ name, price });
-            saveAndRefresh();
-            
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "ADDED! ✨";
-            btn.style.backgroundColor = "#00f0ff";
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.backgroundColor = "";
-            }, 800);
-        }
-
-        function saveAndRefresh() {
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
+        function addToCart(name, price) { cart.push({ name, price }); updateUI(); }
+        function updateUI() {
             localStorage.setItem('sugarRushCart', JSON.stringify(cart));
-            updateCartUI();
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            container.innerHTML = cart.map((item, i) => `<div class="border-2 border-black p-2 mb-2 flex justify-between"><span>${item.name}</span><b>$${item.price}</b></div>`).join('');
         }
-
-        function updateCartUI() {
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-gray-500 italic">Your bag is empty.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    total += item.price;
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'flex justify-between items-center bg-gray-100 p-3 border-2 border-black';
-                    itemEl.innerHTML = `<div><div class="font-bold">${item.name}</div><div>$${item.price}</div></div><button onclick="removeItem(${index})" class="text-red-500 font-bold">DEL</button>`;
-                    cartItemsContainer.appendChild(itemEl);
-                });
-            }
-            cartTotalDisplay.innerText = `$${total.toFixed(2)}`;
-            cartCountDisplay.innerText = cart.length;
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            saveAndRefresh();
-        }
-
-        function checkout() { alert("Checkout initialized!"); }
-        window.onload = updateCartUI;
+        window.onload = updateUI;
     </script>
 </body>
 </html>
