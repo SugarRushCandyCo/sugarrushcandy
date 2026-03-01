@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARIETY BAGS | SUGAR RUSH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --neon-blue: #00f0ff; --ink-black: #1a1a1a; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; color: var(--ink-black); }
+        h1, h2, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 10px 10px 0px var(--ink-black); transition: 0.2s; }
+        .brutal-card:hover { transform: translate(-5px, -5px); box-shadow: 15px 15px 0px var(--neon-pink); }
+        .btn-main { background: var(--neon-yellow); border: 3px solid var(--ink-black); padding: 10px 20px; font-weight: 800; box-shadow: 4px 4px 0px var(--ink-black); cursor: pointer; }
+        .cart-dot { background: var(--neon-pink); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; position: absolute; top: -5px; right: -10px; border: 2px solid var(--ink-black); }
+    </style>
+</head>
+<body>
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
+        <a href="../" class="text-3xl font-extrabold tracking-tighter brand-font">SUGAR<span class="text-pink-500">RUSH</span></a>
+        <div class="hidden md:flex space-x-8 font-bold uppercase text-sm">
+            <a href="../shop/" class="hover:text-pink-500">Shop All</a>
+            <a href="./" class="text-pink-500 underline decoration-4 underline-offset-4">Variety Bags</a>
+            <a href="../wholesale/" class="hover:text-pink-500">Wholesale</a>
+        </div>
+        <div class="relative cursor-pointer" onclick="toggleCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <div id="cart-count" class="cart-dot">0</div>
+        </div>
+    </nav>
+
+    <header class="py-16 px-6 text-center border-b-4 border-black bg-pink-100">
+        <h1 class="text-6xl md:text-8xl font-black italic">PRE-MIXED<br>ENERGY.</h1>
+        <p class="text-xl font-bold uppercase mt-4">Curated hauls for the indecisive.</p>
+    </header>
+
+    <section class="py-16 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="brutal-card p-8 flex flex-col items-center">
+            <div class="text-8xl mb-6">⚡️</div>
+            <h3 class="text-2xl font-black uppercase">The Rush Bag</h3>
+            <p class="mb-6 font-medium text-center italic">A high-voltage mix of our sourest worms and bricks.</p>
+            <p class="text-3xl font-black mb-6">$22.00</p>
+            <button onclick="addToCart('The Rush Bag', 22)" class="btn-main w-full text-xl">ADD TO HAUL</button>
+        </div>
+        <div class="brutal-card p-8 flex flex-col items-center">
+            <div class="text-8xl mb-6">🍭</div>
+            <h3 class="text-2xl font-black uppercase">Sweet Tooth</h3>
+            <p class="mb-6 font-medium text-center italic">All the sweet, none of the sour. Pure sugar bliss.</p>
+            <p class="text-3xl font-black mb-6">$18.00</p>
+            <button onclick="addToCart('Sweet Tooth Bag', 18)" class="btn-main w-full text-xl">ADD TO HAUL</button>
+        </div>
+        <div class="brutal-card p-8 flex flex-col items-center">
+            <div class="text-8xl mb-6">🛸</div>
+            <h3 class="text-2xl font-black uppercase">Intergalactic</h3>
+            <p class="mb-6 font-medium text-center italic">Space saucers and mystery bites from the future.</p>
+            <p class="text-3xl font-black mb-6">$25.00</p>
+            <button onclick="addToCart('Intergalactic Mix', 25)" class="btn-main w-full text-xl">ADD TO HAUL</button>
+        </div>
+    </section>
+
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-80 bg-white border-l-4 border-black translate-x-full transition-transform duration-300 z-[60] p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-8"><h2 class="text-2xl font-black italic">YOUR HAUL</h2><button onclick="toggleCart()" class="text-4xl">&times;</button></div>
+        <div id="cart-items" class="flex-grow overflow-y-auto"></div>
+        <div class="border-t-4 border-black pt-4"><button class="btn-main w-full py-4 text-xl" onclick="alert('Proceeding...')">CHECKOUT</button></div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('sugarRushCart')) || [];
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
+        function addToCart(name, price) { cart.push({ name, price }); updateUI(); }
+        function updateUI() {
+            localStorage.setItem('sugarRushCart', JSON.stringify(cart));
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            container.innerHTML = cart.map((item, i) => `<div class="border-2 border-black p-2 mb-2 flex justify-between bg-gray-50"><span>${item.name}</span><b>$${item.price}</b></div>`).join('');
+        }
+        window.onload = updateUI;
+    </script>
+</body>
+</html>
