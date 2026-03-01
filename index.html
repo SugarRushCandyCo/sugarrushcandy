@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUGAR RUSH | Hip Candy & Curated Bags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-yellow: #ccff00;
+            --neon-blue: #00f0ff;
+            --ink-black: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #f0f0f0;
+            color: var(--ink-black);
+            overflow-x: hidden;
+        }
+
+        h1, h2, .brand-font {
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .brutal-card {
+            background: white;
+            border: 4px solid var(--ink-black);
+            box-shadow: 8px 8px 0px var(--ink-black);
+            transition: all 0.2s ease;
+        }
+
+        .brutal-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px var(--neon-pink);
+        }
+
+        .btn-main {
+            background: var(--neon-yellow);
+            border: 3px solid var(--ink-black);
+            padding: 10px 20px;
+            font-weight: 800;
+            box-shadow: 4px 4px 0px var(--ink-black);
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-main:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--ink-black);
+        }
+
+        .marquee {
+            background: var(--ink-black);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .cart-dot {
+            background: var(--neon-pink);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            border: 2px solid var(--ink-black);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee">
+        <div class="marquee-content brand-font">
+            ⚡️ FREE SHIPPING ON ORDERS OVER $50 ⚡️ NEW "SOUR BLISS" BAG OUT NOW ⚡️ STAY SWEET OR STAY SALTY ⚡️ JOIN THE RUSH ⚡️ FREE SHIPPING ON ORDERS OVER $50 ⚡️
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
+        <a href="index.html" class="text-3xl font-extrabold tracking-tighter brand-font no-underline">SUGAR<span class="text-pink-500">RUSH</span></a>
+        <div class="hidden md:flex space-x-8 font-bold uppercase">
+            <a href="shopall.html" class="hover:text-pink-500 transition-colors">Shop All</a>
+            <a href="varietybags.html" class="hover:text-pink-500 transition-colors">Variety Bags</a>
+            <a href="wholesale.html" class="hover:text-pink-500 transition-colors">Wholesale</a>
+        </div>
+        <div class="relative cursor-pointer" onclick="toggleCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <div id="cart-count" class="cart-dot">0</div>
+        </div>
+    </nav>
+
+    <header class="py-20 px-6 text-center bg-blue-100 border-b-4 border-black">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 leading-none">CANDY FOR<br><span class="text-blue-600">THE COOL KIDS.</span></h1>
+        <p class="text-xl font-medium mb-8 max-w-xl mx-auto">No boring licorice here. Just high-voltage flavors and curated variety bags shipped straight to your door.</p>
+        <a href="varietybags.html" class="btn-main text-2xl">GRAB A BAG ↓</a>
+    </header>
+
+    <section id="bags" class="py-16 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-black mb-12">The Variety Vault</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            
+            <div class="brutal-card p-6 flex flex-col items-center text-center bg-yellow-50">
+                <div class="w-full h-64 bg-yellow-200 mb-6 flex items-center justify-center border-4 border-black">
+                    <span class="text-6xl">🍋</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Electric Citrus Mix</h3>
+                <p class="mb-4 flex-grow">A high-voltage blend of lemon, lime, and yuzu sours. Guaranteed pucker.</p>
+                <div class="text-2xl font-black mb-4">$18.00</div>
+                <button onclick="addToCart('Electric Citrus Mix', 18, event)" class="btn-main w-full">ADD TO CART</button>
+            </div>
+
+            <div class="brutal-card p-6 flex flex-col items-center text-center bg-purple-50">
+                <div class="w-full h-64 bg-purple-200 mb-6 flex items-center justify-center border-4 border-black">
+                    <span class="text-6xl">🌌</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Midnight Gummy Pack</h3>
+                <p class="mb-4 flex-grow">Deep berry flavors, blue raspberry stars, and chewy cola bottles.</p>
+                <div class="text-2xl font-black mb-4">$22.00</div>
+                <button onclick="addToCart('Midnight Gummy Pack', 22, event)" class="btn-main w-full">ADD TO CART</button>
+            </div>
+
+            <div class="brutal-card p-6 flex flex-col items-center text-center bg-pink-50">
+                <div class="w-full h-64 bg-pink-200 mb-6 flex items-center justify-center border-4 border-black">
+                    <span class="text-6xl">🍭</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Pastel Dream Bag</h3>
+                <p class="mb-4 flex-grow">Marshmallow puffs, strawberry creams, and peach rings. Pure vibes.</p>
+                <div class="text-2xl font-black mb-4">$20.00</div>
+                <button onclick="addToCart('Pastel Dream Bag', 20, event)" class="btn-main w-full">ADD TO CART</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="shop" class="bg-black text-white py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-black mb-12 text-neon-yellow" style="color: var(--neon-yellow);">A La Carte Treats</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="border-2 border-white p-4 hover:bg-white hover:text-black transition-colors cursor-pointer" onclick="addToCart('Neon Worms', 4, event)">
+                    <div class="text-4xl mb-2">🪱</div>
+                    <p class="font-bold">Neon Worms — $4</p>
+                </div>
+                <div class="border-2 border-white p-4 hover:bg-white hover:text-black transition-colors cursor-pointer" onclick="addToCart('Fizzy Cherries', 5, event)">
+                    <div class="text-4xl mb-2">🍒</div>
+                    <p class="font-bold">Fizzy Cherries — $5</p>
+                </div>
+                <div class="border-2 border-white p-4 hover:bg-white hover:text-black transition-colors cursor-pointer" onclick="addToCart('Sour Bricks', 6, event)">
+                    <div class="text-4xl mb-2">🧱</div>
+                    <p class="font-bold">Sour Bricks — $6</p>
+                </div>
+                <div class="border-2 border-white p-4 hover:bg-white hover:text-black transition-colors cursor-pointer" onclick="addToCart('Mega Jawbreaker', 3, event)">
+                    <div class="text-4xl mb-2">🍬</div>
+                    <p class="font-bold">Jawbreaker — $3</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-80 bg-white border-l-4 border-black translate-x-full transition-transform duration-300 z-[60] p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-black">YOUR HAUL</h2>
+            <button onclick="toggleCart()" class="text-3xl font-bold">&times;</button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto space-y-4">
+            <p class="text-gray-500 italic">Your bag is empty... for now.</p>
+        </div>
+        <div class="border-t-4 border-black pt-4 mt-4">
+            <div class="flex justify-between text-xl font-black mb-4">
+                <span>TOTAL:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-main w-full py-4 text-xl" onclick="checkout()">CHECKOUT NOW</button>
+        </div>
+    </div>
+
+    <footer class="py-12 border-t-4 border-black text-center font-bold">
+        <p>© 2026 SUGAR RUSH CORP. KEEP IT SWEET.</p>
+    </footer>
+
+    <script>
+        // Load cart from localStorage or start empty
+        let cart = JSON.parse(localStorage.getItem('sugarRushCart')) || [];
+        
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalDisplay = document.getElementById('cart-total');
+        const cartCountDisplay = document.getElementById('cart-count');
+
+        function toggleCart() {
+            cartSidebar.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(name, price, event) {
+            cart.push({ name, price });
+            saveAndUpdate();
+            
+            // Visual feedback
+            if (cartSidebar.classList.contains('translate-x-full')) {
+                const target = event.currentTarget;
+                const originalText = target.innerText;
+                
+                // Check if it's a button or a div
+                if(target.tagName === "BUTTON") {
+                    target.innerText = "ADDED! ✨";
+                    target.style.backgroundColor = "#00f0ff";
+                    setTimeout(() => {
+                        target.innerText = originalText;
+                        target.style.backgroundColor = "";
+                    }, 800);
+                }
+            }
+        }
+
+        function saveAndUpdate() {
+            localStorage.setItem('sugarRushCart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 italic">Your bag is empty... for now.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex justify-between items-center bg-gray-100 p-3 border-2 border-black shadow-[2px_2px_0px_black]';
+                    itemEl.innerHTML = `
+                        <div>
+                            <div class="font-bold uppercase text-sm">${item.name}</div>
+                            <div class="text-xs font-bold">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <button onclick="removeItem(${index})" class="text-red-500 font-black text-xs hover:underline">DEL</button>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
+                });
+            }
+
+            cartTotalDisplay.innerText = `$${total.toFixed(2)}`;
+            cartCountDisplay.innerText = cart.length;
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveAndUpdate();
+        }
+
+        function checkout() {
+            if (cart.length === 0) return alert("Your cart is empty!");
+            alert("Redirecting to secure checkout...");
+            cart = [];
+            saveAndUpdate();
+            toggleCart();
+        }
+
+        // Initialize UI on load
+        window.onload = updateCartUI;
+    </script>
+</body>
+</html>
