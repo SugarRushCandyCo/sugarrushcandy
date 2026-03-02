@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
+        html { overflow-y: scroll; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: var(--ink-black); color: white; }
-        h1, h2, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
         .input-style { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; color: black; outline: none; }
-        .input-style:focus { border-color: var(--neon-pink); }
     </style>
 </head>
 <body>
-    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-20">
-        <div class="w-48 flex-shrink-0">
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
+        <div class="w-64 flex-shrink-0">
             <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
         <div class="hidden md:flex items-center space-x-12">
@@ -26,52 +26,24 @@
             <a href="/sugarrushcandy/shop" class="nav-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link active-link">Wholesale</a>
         </div>
-        <div class="w-48 flex-shrink-0 flex justify-end">
-            <button class="font-bold border-2 border-black px-4 py-1">CART (<span id="cart-count">0</span>)</button>
-        </div>
+        <div class="w-64 flex-shrink-0 flex justify-end"></div>
     </nav>
 
     <main class="max-w-4xl mx-auto py-20 px-6">
         <h1 class="text-6xl md:text-8xl font-black italic mb-4 text-center" style="color: var(--neon-yellow);">BULK MANIFEST</h1>
-        <p class="text-center text-xl mb-12 opacity-80 uppercase font-bold tracking-widest">Global Distribution & Event Operations</p>
-        
-        <div class="bg-white text-black p-8 md:p-12 border-8 border-neon-yellow shadow-[20px_20px_0px_white]">
-            <h2 class="text-3xl font-black mb-8 italic">Apply for Partner Access</h2>
+        <div class="bg-white text-black p-12 border-8 border-neon-yellow shadow-[20px_20px_0px_white]">
             <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" placeholder="COMPANY NAME" class="input-style md:col-span-2">
                 <input type="text" placeholder="CONTACT NAME" class="input-style">
                 <input type="email" placeholder="WORK EMAIL" class="input-style">
                 <input type="tel" placeholder="PHONE NUMBER" class="input-style">
-                <input type="text" placeholder="BUSINESS LOCATION (CITY, STATE)" class="input-style">
-                
-                <select class="input-style">
-                    <option>BUSINESS TYPE</option>
-                    <option>RETAIL STORE</option>
-                    <option>ONLINE SHOP</option>
-                    <option>EVENT PLANNER</option>
-                    <option>DISTRIBUTOR</option>
-                </select>
-                
-                <select class="input-style">
-                    <option>MONTHLY VOLUME</option>
-                    <option>25-100 LBS</option>
-                    <option>100-500 LBS</option>
-                    <option>500+ LBS</option>
-                </select>
-
-                <textarea placeholder="DESCRIBE YOUR OPERATION AND CANDY REQUIREMENTS" class="input-style md:col-span-2 h-40"></textarea>
-                
-                <button type="button" class="md:col-span-2 bg-black text-white py-6 font-black text-2xl hover:bg-neon-pink transition-all uppercase italic">Submit Manifest</button>
+                <input type="text" placeholder="LOCATION" class="input-style">
+                <select class="input-style"><option>BUSINESS TYPE</option><option>RETAIL</option></select>
+                <select class="input-style"><option>VOLUME</option><option>500+ LBS</option></select>
+                <textarea placeholder="REQUIREMENTS" class="input-style md:col-span-2 h-40"></textarea>
+                <button type="button" class="md:col-span-2 bg-black text-white py-6 font-black text-2xl hover:bg-neon-pink uppercase">Submit</button>
             </form>
         </div>
     </main>
-
-    <script>
-        function updateCount() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-        updateCount();
-    </script>
 </body>
 </html>
