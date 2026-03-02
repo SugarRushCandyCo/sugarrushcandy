@@ -8,18 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; overflow-x: hidden; }
+        html { overflow-y: scroll; } /* Prevents jumping when scrollbar appears */
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        
+        /* Rigid Nav Styling */
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
         .nav-link:hover { color: var(--neon-pink); }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
+        
         .btn-main { background: var(--neon-yellow); border: 4px solid var(--ink-black); padding: 20px 40px; font-weight: 800; box-shadow: 8px 8px 0px var(--ink-black); cursor: pointer; display: inline-block; text-decoration: none; color: black; transition: 0.1s; }
         .btn-main:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--neon-pink); }
     </style>
 </head>
 <body>
-    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-20">
-        <div class="w-48 flex-shrink-0">
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
+        <div class="w-64 flex-shrink-0">
             <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
         <div class="hidden md:flex items-center space-x-12">
@@ -27,28 +31,15 @@
             <a href="/sugarrushcandy/shop" class="nav-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
-        <div class="w-48 flex-shrink-0 flex justify-end">
-            <button onclick="location.href='/sugarrushcandy/shop'" class="font-bold border-2 border-black px-4 py-1 flex items-center gap-2 hover:bg-black hover:text-white transition-all">
-                CART (<span id="cart-count">0</span>)
-            </button>
-        </div>
+        <div class="w-64 flex-shrink-0 flex justify-end">
+            </div>
     </nav>
 
     <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-blue-100 border-b-4 border-black relative">
-        <div class="absolute top-10 left-10 text-9xl opacity-10 select-none">🍬</div>
-        <div class="absolute bottom-10 right-10 text-9xl opacity-10 select-none">🍭</div>
         <h1 class="text-7xl md:text-[12rem] font-black mb-8 leading-none uppercase italic tracking-tighter">
             Sugar<br><span class="text-blue-600">Rush.</span>
         </h1>
         <a href="/sugarrushcandy/shop" class="btn-main text-3xl uppercase italic">Enter the Shop</a>
     </header>
-
-    <script>
-        function updateCount() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-        updateCount();
-    </script>
 </body>
 </html>
