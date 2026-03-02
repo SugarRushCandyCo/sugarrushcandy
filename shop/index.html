@@ -121,81 +121,78 @@
     </section>
 
     <script>
-        let isDrawerOpen = false;
+        // Add this variable to the top of your script
+let isDrawerOpen = false;
 
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            isDrawerOpen = !isDrawerOpen;
-            if (isDrawerOpen) {
-                drawer.classList.add('open');
-                renderCart();
-            } else {
-                drawer.classList.remove('open');
-            }
-        }
+function toggleCart() {
+    const drawer = document.getElementById('cart-drawer');
+    isDrawerOpen = !isDrawerOpen; // Tracks if drawer is visible
+    if (isDrawerOpen) {
+        drawer.classList.add('open');
+        renderCart();
+    } else {
+        drawer.classList.remove('open');
+    }
+}
 
-        function showToast(message) {
-            const x = document.getElementById("toast");
-            x.innerText = message;
-            x.className = "show";
-            setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
-        }
+function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+    cart.push({ id: Date.now(), name, price });
+    localStorage.setItem('candy-cart', JSON.stringify(cart));
+    
+    updateHeaderCount();
+    showToast(name + " ADDED!");
 
-        function addToCart(name, price) {
-            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart.push({ id: Date.now(), name, price });
-            localStorage.setItem('candy-cart', JSON.stringify(cart));
-            
-            updateHeaderCount();
-            showToast(name + " ADDED!");
-            
-            // Fix: Re-render immediately if drawer is already open
-            if (isDrawerOpen) {
-                renderCart();
-            }
-        }
+    // INSTANT UPDATE: If drawer is already open, refresh the list immediately
+    if (isDrawerOpen) {
+        renderCart();
+    }
+}
 
-        function removeFromCart(id) {
-            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart = cart.filter(item => item.id !== id);
-            localStorage.setItem('candy-cart', JSON.stringify(cart));
-            updateHeaderCount();
-            renderCart();
-        }
+function removeFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('candy-cart', JSON.stringify(cart));
+    updateHeaderCount();
+    renderCart();
+}
 
-        function renderCart() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            const container = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            container.innerHTML = '';
-            let total = 0;
+function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    container.innerHTML = '';
+    let total = 0;
 
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="text-center py-10 opacity-50 font-bold">Your haul is empty...</p>';
-            } else {
-                cart.forEach(item => {
-                    total += item.price;
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <div>
-                                <p class="font-black uppercase">${item.name}</p>
-                                <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p>
-                            </div>
-                            <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black hover:underline">REMOVE</button>
-                        </div>
-                    `;
-                });
-            }
-            totalEl.innerText = `$${total.toFixed(2)}`;
-        }
+    if (cart.length === 0) {
+        container.innerHTML = '<p class="text-center py-10 opacity-50 font-bold">Your haul is empty...</p>';
+    } else {
+        cart.forEach(item => {
+            total += item.price;
+            container.innerHTML += `
+                <div class="cart-item border-b-2 border-gray-100 py-4 flex justify-between items-center">
+                    <div>
+                        <p class="font-black uppercase text-sm">${item.name}</p>
+                        <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline">REMOVE</button>
+                </div>
+            `;
+        });
+    }
+    totalEl.innerText = `$${total.toFixed(2)}`;
+}
 
-        function updateHeaderCount() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-        
-        // Initial count on load
-        updateHeaderCount();
+function updateHeaderCount() {
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
+        const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+        countEl.innerText = cart.length;
+    }
+}
+
+// Ensure the count is correct when the page first loads
+updateHeaderCount();
     </script>
 </body>
 </html>
