@@ -10,23 +10,27 @@
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
-        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: color 0.2s; }
+        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; }
         .nav-link:hover { color: var(--neon-pink); }
+        .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
         .btn-main { background: var(--neon-yellow); border: 3px solid var(--ink-black); padding: 15px 30px; font-weight: 800; box-shadow: 6px 6px 0px var(--ink-black); cursor: pointer; display: inline-block; text-decoration: none; color: black; }
     </style>
 </head>
 <body>
-    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
-        <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
-        <div class="hidden md:flex items-center space-x-12 uppercase font-bold text-sm">
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-20">
+        <div class="w-48 flex-shrink-0">
+            <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+        </div>
+        <div class="hidden md:flex items-center space-x-12">
+            <a href="/sugarrushcandy" class="nav-link active-link">Home</a>
             <a href="/sugarrushcandy/shop" class="nav-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
-        <div class="w-8"></div>
+        <div class="w-48 flex-shrink-0 flex justify-end"></div>
     </nav>
 
     <header class="py-32 px-6 text-center bg-blue-100 border-b-4 border-black">
-        <h1 class="text-6xl md:text-9xl font-black mb-6 leading-none uppercase">Sugar<br><span class="text-blue-600">Rush.</span></h1>
+        <h1 class="text-6xl md:text-9xl font-black mb-6 leading-none uppercase italic">Sugar<br><span class="text-blue-600">Rush.</span></h1>
         <a href="/sugarrushcandy/shop" class="btn-main text-2xl uppercase">Enter the Shop</a>
     </header>
 </body>
