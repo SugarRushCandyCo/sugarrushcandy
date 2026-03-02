@@ -16,16 +16,22 @@
     </style>
 </head>
 <body>
-    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center">
-        <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
-        <div class="hidden md:flex items-center space-x-8 uppercase font-bold text-sm">
-            <a href="/sugarrushcandy/shop" class="hover:text-pink-500 transition-colors">Shop All</a>
-            <a href="/sugarrushcandy/bags" class="active-link">Variety Bags</a>
-            <a href="/sugarrushcandy/wholesale" class="hover:text-pink-500 transition-colors">Wholesale</a>
-        </div>
-        <div class="w-8"></div>
-    </nav>
-
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
+    <div class="w-80 flex-shrink-0">
+        <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+    </div>
+    <div class="flex items-center space-x-12">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/shop" class="nav-link">Shop All</a>
+        <a href="/varietybags" class="nav-link">Variety Bags</a>
+        <a href="/wholesale" class="nav-link">Wholesale</a>
+    </div>
+    <div class="w-80 flex-shrink-0 flex justify-end">
+        <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
+            HAUL (<span id="cart-count">0</span>)
+        </button>
+    </div>
+</nav>
     <header class="py-16 px-6 text-center border-b-4 border-black bg-pink-50">
         <h1 class="text-6xl font-black italic">THE BUNDLES</h1>
         <p class="font-bold uppercase">Curated hauls. Ready to rip.</p>
