@@ -8,22 +8,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        html { overflow-y: scroll; }
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; }
+        /* Standardize scrollbar behavior to prevent layout shift */
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; margin: 0; }
         h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
         
-        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
+        /* Rigid Nav Styling - Fixed Widths prevent "Dancing" */
+        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; display: inline-block; }
+        .nav-link:hover { color: var(--neon-pink); }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
         
+        /* UI Elements */
         .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); transition: 0.1s; }
         .section-header { border-bottom: 4px solid black; background: white; padding: 20px; display: inline-block; transform: rotate(-1deg); margin-bottom: 40px; }
 
         /* Notification Toast */
-        #toast { visibility: hidden; min-width: 250px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 16px; position: fixed; z-index: 100; left: 50%; transform: translateX(-50%); top: 30px; font-weight: 800; text-transform: uppercase; box-shadow: 6px 6px 0px black; }
+        #toast { visibility: hidden; min-width: 250px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 16px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: 30px; font-weight: 800; text-transform: uppercase; box-shadow: 6px 6px 0px black; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 
         /* Cart Drawer */
-        #cart-drawer { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1); padding: 30px; box-shadow: -10px 0 0 rgba(0,0,0,0.1); }
+        #cart-drawer { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); padding: 30px; box-shadow: -10px 0 0 rgba(0,0,0,0.1); }
         #cart-drawer.open { right: 0; }
         .cart-item { border-bottom: 2px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
 
@@ -37,7 +41,7 @@
     <div id="cart-drawer">
         <div class="flex justify-between items-center mb-8 border-b-4 border-black pb-4">
             <h2 class="text-3xl font-black italic">Your Haul</h2>
-            <button onclick="toggleCart()" class="text-xl font-bold">CLOSE [X]</button>
+            <button onclick="toggleCart()" class="text-xl font-bold hover:text-pink-500">CLOSE [X]</button>
         </div>
         <div id="cart-items" class="mb-8 overflow-y-auto max-h-[60vh]">
             </div>
@@ -46,7 +50,7 @@
                 <span>TOTAL:</span>
                 <span id="cart-total">$0.00</span>
             </div>
-            <button class="w-full bg-black text-white py-4 font-black text-xl hover:bg-pink-500 uppercase italic">Checkout Now</button>
+            <button class="w-full bg-black text-white py-4 font-black text-xl hover:bg-pink-500 uppercase italic transition-colors">Checkout Now</button>
         </div>
     </div>
 
@@ -54,7 +58,7 @@
         <div class="w-64 flex-shrink-0">
             <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
-        <div class="hidden md:flex items-center space-x-12">
+        <div class="flex items-center space-x-12">
             <a href="/sugarrushcandy" class="nav-link">Home</a>
             <a href="/sugarrushcandy/shop" class="nav-link active-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
@@ -117,9 +121,17 @@
     </section>
 
     <script>
+        let isDrawerOpen = false;
+
         function toggleCart() {
-            document.getElementById('cart-drawer').classList.toggle('open');
-            renderCart();
+            const drawer = document.getElementById('cart-drawer');
+            isDrawerOpen = !isDrawerOpen;
+            if (isDrawerOpen) {
+                drawer.classList.add('open');
+                renderCart();
+            } else {
+                drawer.classList.remove('open');
+            }
         }
 
         function showToast(message) {
@@ -133,8 +145,14 @@
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             cart.push({ id: Date.now(), name, price });
             localStorage.setItem('candy-cart', JSON.stringify(cart));
+            
             updateHeaderCount();
             showToast(name + " ADDED!");
+            
+            // Fix: Re-render immediately if drawer is already open
+            if (isDrawerOpen) {
+                renderCart();
+            }
         }
 
         function removeFromCart(id) {
@@ -152,18 +170,22 @@
             container.innerHTML = '';
             let total = 0;
 
-            cart.forEach(item => {
-                total += item.price;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <p class="font-black uppercase">${item.name}</p>
-                            <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p>
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center py-10 opacity-50 font-bold">Your haul is empty...</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price;
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div>
+                                <p class="font-black uppercase">${item.name}</p>
+                                <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black hover:underline">REMOVE</button>
                         </div>
-                        <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black">REMOVE</button>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
             totalEl.innerText = `$${total.toFixed(2)}`;
         }
 
@@ -171,6 +193,8 @@
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             document.getElementById('cart-count').innerText = cart.length;
         }
+        
+        // Initial count on load
         updateHeaderCount();
     </script>
 </body>
