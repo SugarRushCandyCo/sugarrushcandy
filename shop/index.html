@@ -12,7 +12,10 @@
         h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
-        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); }
+        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); transition: 0.1s; }
+        .brutal-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--neon-pink); }
+        .btn-add { background: var(--neon-yellow); border: 2px solid black; padding: 10px; font-weight: 800; width: 100%; cursor: pointer; transition: 0.1s; }
+        .btn-add:active { transform: scale(0.95); }
         .section-header { border-bottom: 4px solid black; background: white; padding: 20px; display: inline-block; transform: rotate(-1deg); margin-bottom: 40px; }
     </style>
 </head>
@@ -27,30 +30,76 @@
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
         <div class="w-48 flex-shrink-0 flex justify-end">
-            <button class="font-bold border-2 border-black px-4 py-1">CART (0)</button>
+            <button class="font-bold border-2 border-black px-4 py-1 flex items-center gap-2 bg-black text-white">
+                CART (<span id="cart-count">0</span>)
+            </button>
         </div>
     </nav>
 
     <section class="py-20 px-6 max-w-7xl mx-auto">
         <div class="section-header"><h2 class="text-4xl font-black italic">Pick 'n' Mix</h2></div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            <div class="brutal-card p-4 text-center"><div class="text-5xl mb-2">🌈</div><h3 class="font-bold">Neon Worms</h3><p class="font-black">$4.00</p></div>
-            <div class="brutal-card p-4 text-center"><div class="text-5xl mb-2">🍒</div><h3 class="font-bold">Fizzy Cherry</h3><p class="font-black">$4.50</p></div>
-            <div class="brutal-card p-4 text-center"><div class="text-5xl mb-2">🧱</div><h3 class="font-bold">Sour Bricks</h3><p class="font-black">$5.00</p></div>
-            <div class="brutal-card p-4 text-center"><div class="text-5xl mb-2">🛸</div><h3 class="font-bold">Flying Saucers</h3><p class="font-black">$3.00</p></div>
+            <div class="brutal-card p-6 text-center">
+                <div class="text-6xl mb-4">🌈</div>
+                <h3 class="font-bold mb-2">Neon Worms</h3>
+                <p class="text-2xl font-black mb-4">$4.00</p>
+                <button onclick="addToCart('Neon Worms', 4.00)" class="btn-add">ADD TO CART</button>
+            </div>
+            <div class="brutal-card p-6 text-center">
+                <div class="text-6xl mb-4">🍒</div>
+                <h3 class="font-bold mb-2">Fizzy Cherry</h3>
+                <p class="text-2xl font-black mb-4">$4.50</p>
+                <button onclick="addToCart('Fizzy Cherry', 4.50)" class="btn-add">ADD TO CART</button>
+            </div>
+            <div class="brutal-card p-6 text-center">
+                <div class="text-6xl mb-4">🧱</div>
+                <h3 class="font-bold mb-2">Sour Bricks</h3>
+                <p class="text-2xl font-black mb-4">$5.00</p>
+                <button onclick="addToCart('Sour Bricks', 5.00)" class="btn-add">ADD TO CART</button>
+            </div>
+            <div class="brutal-card p-6 text-center">
+                <div class="text-6xl mb-4">🛸</div>
+                <h3 class="font-bold mb-2">Flying Saucers</h3>
+                <p class="text-2xl font-black mb-4">$3.00</p>
+                <button onclick="addToCart('Flying Saucers', 3.00)" class="btn-add">ADD TO CART</button>
+            </div>
         </div>
 
         <div class="section-header bg-pink-500 text-white border-white"><h2 class="text-4xl font-black italic">Variety Bags</h2></div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div class="brutal-card p-8 flex items-center gap-6">
-                <div class="text-7xl">⚡️</div>
-                <div><h3 class="text-2xl font-black">THE SOUR RUSH</h3><p class="text-2xl font-black">$28.00</p></div>
+            <div class="brutal-card p-8 flex flex-col md:flex-row items-center gap-10">
+                <div class="text-8xl">⚡️</div>
+                <div>
+                    <h3 class="text-3xl font-black mb-2">THE SOUR RUSH</h3>
+                    <p class="font-black text-2xl mb-4 text-pink-500">$28.00</p>
+                    <button onclick="addToCart('The Sour Rush Bundle', 28.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-pink-500 transition-colors">Add Bundle</button>
+                </div>
             </div>
-            <div class="brutal-card p-8 flex items-center gap-6">
-                <div class="text-7xl">🍭</div>
-                <div><h3 class="text-2xl font-black">SWEET TOOTH</h3><p class="text-2xl font-black">$25.00</p></div>
+            <div class="brutal-card p-8 flex flex-col md:flex-row items-center gap-10">
+                <div class="text-8xl">🍭</div>
+                <div>
+                    <h3 class="text-3xl font-black mb-2">SWEET TOOTH</h3>
+                    <p class="font-black text-2xl mb-4 text-blue-500">$25.00</p>
+                    <button onclick="addToCart('Sweet Tooth Bundle', 25.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-blue-400 transition-colors">Add Bundle</button>
+                </div>
             </div>
         </div>
     </section>
+
+    <script>
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            cart.push({ name, price });
+            localStorage.setItem('candy-cart', JSON.stringify(cart));
+            updateCount();
+            alert(name + " added to haul!");
+        }
+
+        function updateCount() {
+            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+        updateCount();
+    </script>
 </body>
 </html>
