@@ -8,20 +8,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
+        html { overflow-y: scroll; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; }
         h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
+        
         .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); transition: 0.1s; }
-        .brutal-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--neon-pink); }
-        .btn-add { background: var(--neon-yellow); border: 2px solid black; padding: 10px; font-weight: 800; width: 100%; cursor: pointer; transition: 0.1s; }
-        .btn-add:active { transform: scale(0.95); }
         .section-header { border-bottom: 4px solid black; background: white; padding: 20px; display: inline-block; transform: rotate(-1deg); margin-bottom: 40px; }
+
+        /* Notification Toast */
+        #toast { visibility: hidden; min-width: 250px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 16px; position: fixed; z-index: 100; left: 50%; transform: translateX(-50%); top: 30px; font-weight: 800; text-transform: uppercase; box-shadow: 6px 6px 0px black; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        /* Cart Drawer */
+        #cart-drawer { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1); padding: 30px; box-shadow: -10px 0 0 rgba(0,0,0,0.1); }
+        #cart-drawer.open { right: 0; }
+        .cart-item { border-bottom: 2px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
+
+        @keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
+        @keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
     </style>
 </head>
 <body>
-    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-20">
-        <div class="w-48 flex-shrink-0">
+    <div id="toast">Added to Haul!</div>
+
+    <div id="cart-drawer">
+        <div class="flex justify-between items-center mb-8 border-b-4 border-black pb-4">
+            <h2 class="text-3xl font-black italic">Your Haul</h2>
+            <button onclick="toggleCart()" class="text-xl font-bold">CLOSE [X]</button>
+        </div>
+        <div id="cart-items" class="mb-8 overflow-y-auto max-h-[60vh]">
+            </div>
+        <div class="border-t-4 border-black pt-4">
+            <div class="flex justify-between text-2xl font-black mb-6">
+                <span>TOTAL:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="w-full bg-black text-white py-4 font-black text-xl hover:bg-pink-500 uppercase italic">Checkout Now</button>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
+        <div class="w-64 flex-shrink-0">
             <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
         <div class="hidden md:flex items-center space-x-12">
@@ -29,9 +59,9 @@
             <a href="/sugarrushcandy/shop" class="nav-link active-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
-        <div class="w-48 flex-shrink-0 flex justify-end">
-            <button class="font-bold border-2 border-black px-4 py-1 flex items-center gap-2 bg-black text-white">
-                CART (<span id="cart-count">0</span>)
+        <div class="w-64 flex-shrink-0 flex justify-end">
+            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
+                HAUL (<span id="cart-count">0</span>)
             </button>
         </div>
     </nav>
@@ -43,25 +73,25 @@
                 <div class="text-6xl mb-4">🌈</div>
                 <h3 class="font-bold mb-2">Neon Worms</h3>
                 <p class="text-2xl font-black mb-4">$4.00</p>
-                <button onclick="addToCart('Neon Worms', 4.00)" class="btn-add">ADD TO CART</button>
+                <button onclick="addToCart('Neon Worms', 4.00)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
             </div>
             <div class="brutal-card p-6 text-center">
                 <div class="text-6xl mb-4">🍒</div>
                 <h3 class="font-bold mb-2">Fizzy Cherry</h3>
                 <p class="text-2xl font-black mb-4">$4.50</p>
-                <button onclick="addToCart('Fizzy Cherry', 4.50)" class="btn-add">ADD TO CART</button>
+                <button onclick="addToCart('Fizzy Cherry', 4.50)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
             </div>
             <div class="brutal-card p-6 text-center">
                 <div class="text-6xl mb-4">🧱</div>
                 <h3 class="font-bold mb-2">Sour Bricks</h3>
                 <p class="text-2xl font-black mb-4">$5.00</p>
-                <button onclick="addToCart('Sour Bricks', 5.00)" class="btn-add">ADD TO CART</button>
+                <button onclick="addToCart('Sour Bricks', 5.00)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
             </div>
             <div class="brutal-card p-6 text-center">
                 <div class="text-6xl mb-4">🛸</div>
                 <h3 class="font-bold mb-2">Flying Saucers</h3>
                 <p class="text-2xl font-black mb-4">$3.00</p>
-                <button onclick="addToCart('Flying Saucers', 3.00)" class="btn-add">ADD TO CART</button>
+                <button onclick="addToCart('Flying Saucers', 3.00)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
             </div>
         </div>
 
@@ -72,7 +102,7 @@
                 <div>
                     <h3 class="text-3xl font-black mb-2">THE SOUR RUSH</h3>
                     <p class="font-black text-2xl mb-4 text-pink-500">$28.00</p>
-                    <button onclick="addToCart('The Sour Rush Bundle', 28.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-pink-500 transition-colors">Add Bundle</button>
+                    <button onclick="addToCart('Sour Rush Bundle', 28.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-pink-500 transition-colors">Add Bundle</button>
                 </div>
             </div>
             <div class="brutal-card p-8 flex flex-col md:flex-row items-center gap-10">
@@ -87,19 +117,61 @@
     </section>
 
     <script>
-        function addToCart(name, price) {
-            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart.push({ name, price });
-            localStorage.setItem('candy-cart', JSON.stringify(cart));
-            updateCount();
-            alert(name + " added to haul!");
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            renderCart();
         }
 
-        function updateCount() {
+        function showToast(message) {
+            const x = document.getElementById("toast");
+            x.innerText = message;
+            x.className = "show";
+            setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            cart.push({ id: Date.now(), name, price });
+            localStorage.setItem('candy-cart', JSON.stringify(cart));
+            updateHeaderCount();
+            showToast(name + " ADDED!");
+        }
+
+        function removeFromCart(id) {
+            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('candy-cart', JSON.stringify(cart));
+            updateHeaderCount();
+            renderCart();
+        }
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <p class="font-black uppercase">${item.name}</p>
+                            <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black">REMOVE</button>
+                    </div>
+                `;
+            });
+            totalEl.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function updateHeaderCount() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             document.getElementById('cart-count').innerText = cart.length;
         }
-        updateCount();
+        updateHeaderCount();
     </script>
 </body>
 </html>
