@@ -8,43 +8,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        html { overflow-y: scroll; scroll-behavior: smooth; }
+        html { overflow-y: scroll; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; margin: 0; }
         h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
         
-        /* Rigid Nav - w-80 on sides keeps the middle links perfectly still */
+        .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
+        .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
+        @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
-        .nav-link:hover { color: var(--neon-pink); }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
-        
         .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); }
-        .section-header { border-bottom: 4px solid black; background: white; padding: 20px; display: inline-block; transform: rotate(-1deg); margin-bottom: 40px; }
-
-        /* Notification Toast */
-        #toast { visibility: hidden; min-width: 200px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 12px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: -100px; font-weight: 800; text-transform: uppercase; box-shadow: 4px 4px 0px black; transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #toast.show { visibility: visible; top: 20px; }
-
-        /* Cart Drawer */
-        #cart-drawer { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); padding: 30px; }
+        #toast { visibility: hidden; min-width: 200px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 12px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: -100px; font-weight: 800; text-transform: uppercase; transition: top 0.4s; }
+        #toast.show { visibility: visible; top: 70px; }
+        #cart-drawer { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s; padding: 30px; }
         #cart-drawer.open { right: 0; }
-        .cart-item { border-bottom: 2px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
+    <div class="announcement-bar">
+        <div class="scrolling-text">
+            ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️
+        </div>
+    </div>
     <div id="toast">ITEM ADDED!</div>
 
     <div id="cart-drawer">
         <div class="flex justify-between items-center mb-8 border-b-4 border-black pb-4">
             <h2 class="text-3xl font-black italic">Your Haul</h2>
-            <button onclick="toggleCart()" class="text-xl font-bold hover:text-pink-500">CLOSE [X]</button>
+            <button onclick="toggleCart()" class="text-xl font-bold">CLOSE [X]</button>
         </div>
-        <div id="cart-items" class="mb-8 overflow-y-auto max-h-[60vh]"></div>
-        <div class="border-t-4 border-black pt-4">
-            <div class="flex justify-between text-2xl font-black mb-6">
-                <span>TOTAL:</span><span id="cart-total">$0.00</span>
-            </div>
-            <button class="w-full bg-black text-white py-4 font-black text-xl hover:bg-pink-500 uppercase italic transition-all">Checkout</button>
-        </div>
+        <div id="cart-items"></div>
     </div>
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
@@ -57,100 +51,32 @@
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
         <div class="w-80 flex-shrink-0 flex justify-end">
-            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
-                HAUL (<span id="cart-count">0</span>)
-            </button>
+            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white">HAUL (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
 
-    <section class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="section-header"><h2 class="text-4xl font-black italic">Pick 'n' Mix</h2></div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            <div class="brutal-card p-6 text-center">
-                <div class="text-6xl mb-4">🌈</div>
-                <h3 class="font-bold mb-2 uppercase">Neon Worms</h3>
-                <p class="text-2xl font-black mb-4">$4.00</p>
-                <button onclick="addToCart('Neon Worms', 4.00)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
-            </div>
-            <div class="brutal-card p-6 text-center">
-                <div class="text-6xl mb-4">🍒</div>
-                <h3 class="font-bold mb-2 uppercase">Fizzy Cherry</h3>
-                <p class="text-2xl font-black mb-4">$4.50</p>
-                <button onclick="addToCart('Fizzy Cherry', 4.50)" class="w-full bg-yellow-300 border-2 border-black py-2 font-black uppercase hover:bg-black hover:text-white transition-all">Add</button>
-            </div>
-        </div>
-    </section>
-
     <script>
         let isDrawerOpen = false;
-
         function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
+            const d = document.getElementById('cart-drawer');
             isDrawerOpen = !isDrawerOpen;
-            if (isDrawerOpen) {
-                drawer.classList.add('open');
-                renderCart();
-            } else {
-                drawer.classList.remove('open');
-            }
+            isDrawerOpen ? d.classList.add('open') : d.classList.remove('open');
+            if(isDrawerOpen) renderCart();
         }
-
-        function showToast(name) {
-            const toast = document.getElementById("toast");
-            toast.innerText = name + " ADDED!";
-            toast.classList.add("show");
-            setTimeout(() => { toast.classList.remove("show"); }, 2000);
-        }
-
         function addToCart(name, price) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             cart.push({ id: Date.now(), name, price });
             localStorage.setItem('candy-cart', JSON.stringify(cart));
-            
-            updateHeaderCount();
-            showToast(name);
-
-            // INSTANT UPDATE: re-render if the drawer is visible
-            if (isDrawerOpen) { renderCart(); }
+            document.getElementById('cart-count').innerText = cart.length;
+            const t = document.getElementById("toast"); t.innerText = name + " ADDED!"; t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 2000);
+            if (isDrawerOpen) renderCart();
         }
-
-        function removeFromCart(id) {
-            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart = cart.filter(item => item.id !== id);
-            localStorage.setItem('candy-cart', JSON.stringify(cart));
-            updateHeaderCount();
-            renderCart();
-        }
-
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             const container = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            container.innerHTML = '';
-            let total = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="text-center py-10 opacity-50 font-bold uppercase">Haul is Empty</p>';
-            } else {
-                cart.forEach(item => {
-                    total += item.price;
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <div><p class="font-black uppercase text-sm">${item.name}</p>
-                            <p class="font-bold text-gray-400">$${item.price.toFixed(2)}</p></div>
-                            <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline">REMOVE</button>
-                        </div>`;
-                });
-            }
-            totalEl.innerText = `$${total.toFixed(2)}`;
+            container.innerHTML = cart.map(item => `<div class="py-4 border-b uppercase font-bold text-sm flex justify-between"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`).join('');
         }
-
-        function updateHeaderCount() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
-        updateHeaderCount();
     </script>
 </body>
 </html>
