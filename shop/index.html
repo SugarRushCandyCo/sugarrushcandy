@@ -10,9 +10,6 @@
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
         html { overflow-y: scroll; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; margin: 0; }
-        h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
-
-        /* Hide scrollbar logic */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -21,8 +18,9 @@
         @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
+        /* Active State */
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
-        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); }
+        
         #toast { visibility: hidden; min-width: 200px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 12px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: -100px; font-weight: 800; text-transform: uppercase; transition: top 0.4s; }
         #toast.show { visibility: visible; top: 70px; }
         #cart-drawer { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s; padding: 30px; }
@@ -39,22 +37,22 @@
 
     <div id="cart-drawer">
         <div class="flex justify-between items-center mb-8 border-b-4 border-black pb-4">
-            <h2 class="text-3xl font-black italic">Your Haul</h2>
-            <button onclick="toggleCart()" class="text-xl font-bold">CLOSE [X]</button>
+            <h2 class="text-3xl font-black italic uppercase" style="font-family: 'Syne';">Your Haul</h2>
+            <button onclick="toggleCart()" class="text-xl font-bold hover:text-pink-500">CLOSE [X]</button>
         </div>
-        <div id="cart-items"></div>
+        <div id="cart-items" class="mb-8 overflow-y-auto max-h-[70vh]"></div>
     </div>
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
         <div class="w-80 flex-shrink-0">
-            <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+            <a href="/" class="text-3xl font-extrabold no-underline text-black uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
         <div class="flex items-center space-x-12">
             <a href="/" class="nav-link">Home</a>
             <a href="/shop" class="nav-link active-link">Shop All</a>
         </div>
         <div class="w-80 flex-shrink-0 flex justify-end">
-            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
+            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors uppercase italic">
                 HAUL (<span id="cart-count">0</span>)
             </button>
         </div>
@@ -80,8 +78,14 @@
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             const container = document.getElementById('cart-items');
-            container.innerHTML = cart.map(item => `<div class="py-4 border-b uppercase font-bold text-sm flex justify-between"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`).join('');
+            container.innerHTML = cart.map(item => `
+                <div class="py-4 border-b uppercase font-bold text-sm flex justify-between">
+                    <span>${item.name}</span>
+                    <span>$${item.price.toFixed(2)}</span>
+                </div>`).join('');
         }
+        // Run on load
+        document.getElementById('cart-count').innerText = JSON.parse(localStorage.getItem('candy-cart') || '[]').length;
     </script>
 </body>
 </html>
