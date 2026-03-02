@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-scrollbar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +12,10 @@
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+        /* Hide scrollbar logic */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Announcement Bar */
         .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
         .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
         @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -33,7 +25,7 @@
         .btn-main { background: var(--neon-yellow); border: 4px solid var(--ink-black); padding: 20px 40px; font-weight: 800; box-shadow: 8px 8px 0px var(--ink-black); cursor: pointer; display: inline-block; text-decoration: none; color: black; transition: 0.1s; }
     </style>
 </head>
-<body>
+<body class="no-scrollbar">
     <div class="announcement-bar">
         <div class="scrolling-text">
             ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️
@@ -45,9 +37,10 @@
         <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
     </div>
     <div class="flex items-center space-x-12">
-        <a href="/" class="nav-link">Home</a>
+        <a href="/" class="nav-link active-link">Home</a>
         <a href="/shop" class="nav-link">Shop All</a>
     </div>
+    <div class="w-80 flex-shrink-0"></div>
 </nav>
 
     <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-blue-100 border-b-4 border-black">
