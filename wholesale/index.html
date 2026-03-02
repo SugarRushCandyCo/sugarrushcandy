@@ -8,49 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        /* Prevent layout shift from scrollbar */
         html { overflow-y: scroll; }
-        body { font-family: 'Space Grotesk', sans-serif; background-color: var(--ink-black); color: white; margin: 0; }
-        h1, h2, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
-
-        /* Rigid Nav - Exactly matching Home and Shop */
-        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
-        .nav-link:hover { color: var(--neon-pink); }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: var(--ink-black); margin: 0; color: white; }
+        .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
+        .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
+        @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; padding-bottom: 4px; color: black; text-decoration: none; border-bottom: 4px solid transparent; }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
-        
-        .input-style { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; color: black; outline: none; }
-        .input-style:focus { border-color: var(--neon-pink); }
     </style>
 </head>
 <body>
+    <div class="announcement-bar">
+        <div class="scrolling-text">
+            ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️
+        </div>
+    </div>
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
-        <div class="w-64 flex-shrink-0">
-            <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+        <div class="w-80 flex-shrink-0">
+            <a href="/sugarrushcandy" class="text-3xl font-extrabold no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
         <div class="flex items-center space-x-12">
             <a href="/sugarrushcandy" class="nav-link">Home</a>
             <a href="/sugarrushcandy/shop" class="nav-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link active-link">Wholesale</a>
         </div>
-        <div class="w-64 flex-shrink-0 flex justify-end">
-            </div>
+        <div class="w-80 flex-shrink-0"></div>
     </nav>
-
     <main class="max-w-4xl mx-auto py-20 px-6">
-        <h1 class="text-6xl md:text-8xl font-black italic mb-4 text-center" style="color: var(--neon-yellow);">BULK MANIFEST</h1>
-        <div class="bg-white text-black p-12 border-8 border-neon-yellow shadow-[20px_20px_0px_white]">
-            <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" placeholder="COMPANY NAME" class="input-style md:col-span-2">
-                <input type="text" placeholder="CONTACT NAME" class="input-style">
-                <input type="email" placeholder="WORK EMAIL" class="input-style">
-                <input type="tel" placeholder="PHONE NUMBER" class="input-style">
-                <input type="text" placeholder="LOCATION" class="input-style">
-                <select class="input-style"><option>BUSINESS TYPE</option><option>RETAIL</option><option>EVENT</option></select>
-                <select class="input-style"><option>VOLUME</option><option>100-500 LBS</option><option>500+ LBS</option></select>
-                <textarea placeholder="DESCRIBE YOUR OPERATION" class="input-style md:col-span-2 h-40"></textarea>
-                <button type="button" class="md:col-span-2 bg-black text-white py-6 font-black text-2xl hover:bg-neon-pink uppercase italic">Submit Manifest</button>
-            </form>
-        </div>
+        <h1 class="text-6xl md:text-8xl font-black italic mb-4 text-center uppercase" style="color: var(--neon-yellow);">Bulk Manifest</h1>
     </main>
 </body>
 </html>
