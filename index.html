@@ -8,37 +8,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        html { overflow-y: scroll; } /* Prevents jumping when scrollbar appears */
+        html { overflow-y: scroll; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f0f0f0; margin: 0; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
         
-        /* Rigid Nav Styling */
+        /* Announcement Bar */
+        .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
+        .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
+        @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
         .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
-        .nav-link:hover { color: var(--neon-pink); }
         .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
-        
         .btn-main { background: var(--neon-yellow); border: 4px solid var(--ink-black); padding: 20px 40px; font-weight: 800; box-shadow: 8px 8px 0px var(--ink-black); cursor: pointer; display: inline-block; text-decoration: none; color: black; transition: 0.1s; }
-        .btn-main:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--neon-pink); }
     </style>
 </head>
 <body>
+    <div class="announcement-bar">
+        <div class="scrolling-text">
+            ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️
+        </div>
+    </div>
+
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
-        <div class="w-64 flex-shrink-0">
+        <div class="w-80 flex-shrink-0">
             <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
         </div>
-        <div class="hidden md:flex items-center space-x-12">
+        <div class="flex items-center space-x-12">
             <a href="/sugarrushcandy" class="nav-link active-link">Home</a>
             <a href="/sugarrushcandy/shop" class="nav-link">Shop All</a>
             <a href="/sugarrushcandy/wholesale" class="nav-link">Wholesale</a>
         </div>
-        <div class="w-64 flex-shrink-0 flex justify-end">
-            </div>
+        <div class="w-80 flex-shrink-0"></div>
     </nav>
 
-    <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-blue-100 border-b-4 border-black relative">
-        <h1 class="text-7xl md:text-[12rem] font-black mb-8 leading-none uppercase italic tracking-tighter">
-            Sugar<br><span class="text-blue-600">Rush.</span>
-        </h1>
+    <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-blue-100 border-b-4 border-black">
+        <h1 class="text-7xl md:text-[12rem] font-black mb-8 leading-none uppercase italic tracking-tighter">Sugar<br><span class="text-blue-600">Rush.</span></h1>
         <a href="/sugarrushcandy/shop" class="btn-main text-3xl uppercase italic">Enter the Shop</a>
     </header>
 </body>
