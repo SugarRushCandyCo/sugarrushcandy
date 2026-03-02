@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-scrollbar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +12,9 @@
         body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; margin: 0; }
         h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+        /* Hide scrollbar logic */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
         .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
@@ -36,7 +29,7 @@
         #cart-drawer.open { right: 0; }
     </style>
 </head>
-<body>
+<body class="no-scrollbar">
     <div class="announcement-bar">
         <div class="scrolling-text">
             ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️
@@ -53,19 +46,19 @@
     </div>
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
-    <div class="w-80 flex-shrink-0">
-        <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
-    </div>
-    <div class="flex items-center space-x-12">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/shop" class="nav-link">Shop All</a>
-    </div>
-    <div class="w-80 flex-shrink-0 flex justify-end">
-        <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
-            HAUL (<span id="cart-count">0</span>)
-        </button>
-    </div>
-</nav>
+        <div class="w-80 flex-shrink-0">
+            <a href="/" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
+        </div>
+        <div class="flex items-center space-x-12">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/shop" class="nav-link active-link">Shop All</a>
+        </div>
+        <div class="w-80 flex-shrink-0 flex justify-end">
+            <button onclick="toggleCart()" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors">
+                HAUL (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </nav>
 
     <script>
         let isDrawerOpen = false;
