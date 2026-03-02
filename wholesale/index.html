@@ -5,26 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WHOLESALE | SUGAR RUSH</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
         body { font-family: 'Space Grotesk', sans-serif; background-color: var(--ink-black); color: white; }
         h1, .brand-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        .active-link { color: var(--neon-pink) !important; text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
+        .input-field { background: #333; border: 2px solid white; padding: 12px; color: white; width: 100%; outline: none; }
+        .input-field:focus { border-color: var(--neon-yellow); }
     </style>
 </head>
 <body>
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center text-black">
-        <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline text-black">SUGAR<span class="text-pink-500">RUSH</span></a>
-        <div class="hidden md:flex items-center space-x-8">
-            <a href="/sugarrushcandy/shop" class="hover:text-pink-500 font-bold uppercase text-sm">Shop All</a>
-            <a href="/sugarrushcandy/bags" class="hover:text-pink-500 font-bold uppercase text-sm">Variety Bags</a>
-            <a href="/sugarrushcandy/wholesale" class="text-pink-500 font-bold underline decoration-4 underline-offset-4">Wholesale</a>
+        <a href="/sugarrushcandy" class="text-3xl font-extrabold brand-font no-underline">SUGAR<span class="text-pink-500">RUSH</span></a>
+        <div class="hidden md:flex items-center space-x-8 uppercase font-bold text-sm">
+            <a href="/sugarrushcandy/shop" class="hover:text-pink-500 transition-colors">Shop All</a>
+            <a href="/sugarrushcandy/bags" class="hover:text-pink-500 transition-colors">Variety Bags</a>
+            <a href="/sugarrushcandy/wholesale" class="active-link">Wholesale</a>
         </div>
         <div class="w-8"></div>
     </nav>
 
-    <header class="py-20 px-6 text-center">
-        <h1 class="text-6xl md:text-8xl font-black italic text-neon-yellow" style="color: var(--neon-yellow);">BULK RUSH.</h1>
-    </header>
+    <main class="max-w-6xl mx-auto py-20 px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div>
+                <h1 class="text-7xl font-black italic mb-8" style="color: var(--neon-yellow);">BULK<br>MANIFEST.</h1>
+                <div class="space-y-8">
+                    <div class="border-l-4 border-neon-yellow pl-6">
+                        <h3 class="text-2xl font-black uppercase">Tier 01: Retailer</h3>
+                        <p class="opacity-70">50lb - 200lb monthly. Includes branded display jars.</p>
+                    </div>
+                    <div class="border-l-4 border-pink-500 pl-6">
+                        <h3 class="text-2xl font-black uppercase">Tier 02: Distributor</h3>
+                        <p class="opacity-70">200lb - 1000lb monthly. Custom bag co-branding available.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-400 pl-6">
+                        <h3 class="text-2xl font-black uppercase">Tier 03: Event Ops</h3>
+                        <p class="opacity-70">One-time bulk hauls for festivals and massive activations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white text-black p-10 border-8 border-neon-yellow shadow-[15px_15px_0px_rgba(255,0,255,0.5)]">
+                <h2 class="text-3xl font-black uppercase mb-6 italic">Request Access</h2>
+                <form class="space-y-4">
+                    <input type="text" placeholder="COMPANY NAME" class="border-2 border-black p-3 w-full font-bold">
+                    <input type="email" placeholder="EMAIL ADDRESS" class="border-2 border-black p-3 w-full font-bold">
+                    <select class="border-2 border-black p-3 w-full font-bold">
+                        <option>EXPECTED MONTHLY VOLUME</option>
+                        <option>UNDER 100 LBS</option>
+                        <option>100 - 500 LBS</option>
+                        <option>OVER 500 LBS</option>
+                    </select>
+                    <textarea placeholder="WHICH SKU'S?" class="border-2 border-black p-3 w-full font-bold h-32"></textarea>
+                    <button type="button" class="w-full bg-black text-white py-4 font-black text-xl hover:bg-neon-pink">SEND MANIFEST</button>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
