@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP | SUGAR RUSH</title>
+    <link rel="icon" type="image/png" href="https://img.sanishtech.com/u/0a9cd5c6da8220c084fc3ddd80fcd83a.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -44,7 +46,7 @@
 </head>
 <body class="no-scrollbar">
     <div class="announcement-bar">
-        <div class="scrolling-text">⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️ &nbsp;&nbsp;&nbsp;&nbsp; ⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️</div>
+        <div class="scrolling-text">⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️</div>
     </div>
     <div id="toast">ITEM ADDED!</div>
 
@@ -92,7 +94,9 @@
     </div>
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
-        <div class="w-80 flex-shrink-0"><a href="/" class="text-3xl font-extrabold no-underline text-black uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a></div>
+        <div class="w-80 flex-shrink-0">
+            <a href="/" class="text-3xl font-extrabold no-underline text-black uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
+        </div>
         <div class="flex items-center space-x-12">
             <a href="/" class="nav-link">Home</a>
             <a href="/shop" class="nav-link active-link">Shop All</a>
@@ -111,12 +115,10 @@
                 <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Sour Mix</h3><p class="font-bold opacity-70 italic">Extreme Tang & Neon Vibes.</p></div>
                 <div class="text-right"><p class="text-3xl font-black mb-4">$12.00</p><button onclick="addToCart('Sour Mix', 12.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-[#ff00ff] transition-all">Add to Haul</button></div>
             </div>
-
             <div class="brutal-card p-8 bg-blue-100 flex justify-between items-center">
                 <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Sweet Mix</h3><p class="font-bold opacity-70 italic">Classic Sugary Bliss.</p></div>
                 <div class="text-right"><p class="text-3xl font-black mb-4">$12.00</p><button onclick="addToCart('Sweet Mix', 12.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-blue-500 transition-all">Add to Haul</button></div>
             </div>
-
             <div class="brutal-card p-8 bg-yellow-100 flex justify-between items-center">
                 <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Custom Mix</h3><p class="font-bold opacity-70 italic">Built by You. Packed by Us.</p></div>
                 <div class="text-right"><p class="text-3xl font-black mb-4">$8.00+</p><button onclick="toggleDrawer('custom-drawer')" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-yellow-500 transition-all">Build Mix</button></div>
@@ -130,18 +132,14 @@
             d.classList.toggle('open');
             if(id === 'cart-drawer' && d.classList.contains('open')) renderCart();
         }
-
         function confirmCustomMix() {
             const selected = Array.from(document.querySelectorAll('#candy-list input:checked'));
             const candies = selected.map(c => c.value);
-            // New $8.00 base price
             let finalPrice = 8.00 + (selected.length * 0.50);
-            
             addToCart('Custom Mix', finalPrice, candies);
             toggleDrawer('custom-drawer');
             selected.forEach(c => c.checked = false);
         }
-
         function addToCart(name, price, contents = []) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             cart.push({ id: Date.now(), name, price, contents });
@@ -152,7 +150,6 @@
             setTimeout(() => t.classList.remove("show"), 2000);
             if (document.getElementById('cart-drawer').classList.contains('open')) renderCart();
         }
-
         function removeFromCart(id) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             cart = cart.filter(item => item.id !== id);
@@ -160,35 +157,21 @@
             updateHeaderCount();
             renderCart();
         }
-
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             const container = document.getElementById('cart-items');
             const totalDisplay = document.getElementById('cart-total');
             const checkoutBtn = document.getElementById('checkout-btn');
             const errorMsg = document.getElementById('checkout-error');
-            
             let total = 0;
             let canCheckout = true;
-
             container.innerHTML = cart.map(item => {
                 total += item.price;
                 if (item.name === 'Custom Mix' && item.contents.length === 0) canCheckout = false;
-
-                return `
-                <div class="py-4 border-b-2 border-black">
-                    <div class="flex justify-between items-center mb-1">
-                        <p class="uppercase font-black text-sm">${item.name}</p>
-                        <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline uppercase">Remove</button>
-                    </div>
-                    ${item.contents.length > 0 ? `<p class="text-[10px] font-bold opacity-60 leading-tight mb-1">${item.contents.join(', ')}</p>` : ''}
-                    <p class="font-bold text-xs text-pink-500">$${item.price.toFixed(2)}</p>
-                </div>`;
+                return `<div class="py-4 border-b-2 border-black"><div class="flex justify-between items-center mb-1"><p class="uppercase font-black text-sm">${item.name}</p><button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline uppercase">Remove</button></div>${item.contents.length > 0 ? `<p class="text-[10px] font-bold opacity-60 leading-tight mb-1">${item.contents.join(', ')}</p>` : ''}<p class="font-bold text-xs text-pink-500">$${item.price.toFixed(2)}</p></div>`;
             }).join('');
-            
             if (cart.length === 0) container.innerHTML = '<p class="text-center py-10 font-bold opacity-30 uppercase">Haul is Empty</p>';
             totalDisplay.innerText = `$${total.toFixed(2)}`;
-            
             if (!canCheckout && cart.length > 0) {
                 checkoutBtn.disabled = true;
                 errorMsg.classList.remove('hidden');
@@ -197,11 +180,9 @@
                 errorMsg.classList.add('hidden');
             }
         }
-
         function updateHeaderCount() {
             document.getElementById('cart-count').innerText = JSON.parse(localStorage.getItem('candy-cart') || '[]').length;
         }
-
         updateHeaderCount();
     </script>
 </body>
