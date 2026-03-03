@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP | SUGAR RUSH</title>
-    <link rel="icon" type="image/png" href="Screenshot 2026-03-03 162458.png">
+    <link rel="icon" type="image/png" href="https://imgur.com/a/Fto0rKA.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
@@ -28,9 +28,6 @@
         .category-divider { border-bottom: 8px solid black; margin-bottom: 40px; }
         .category-label { background: black; color: white; display: inline-block; padding: 8px 24px; font-family: 'Syne'; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
 
-        #toast { visibility: hidden; min-width: 200px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 12px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: -100px; font-weight: 800; text-transform: uppercase; transition: top 0.4s; }
-        #toast.show { visibility: visible; top: 70px; }
-        
         .drawer { position: fixed; right: -500px; top: 0; width: 450px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s; padding: 30px; display: flex; flex-direction: column; }
         .drawer.open { right: 0; }
         .cart-footer { margin-top: auto; border-top: 4px solid black; padding-top: 20px; }
@@ -76,20 +73,18 @@
             <label class="candy-option"><span>Sour Patch Kids</span><input type="checkbox" value="Sour Patch Kids" data-price="0.50"></label>
             <label class="candy-option"><span>Haribo Goldbears</span><input type="checkbox" value="Haribo Goldbears" data-price="0.50"></label>
             <label class="candy-option"><span>Haribo Twin Snakes</span><input type="checkbox" value="Haribo Twin Snakes" data-price="0.50"></label>
-            <label class="candy-option"><span>Skittles (Original)</span><input type="checkbox" value="Skittles (Original)" data-price="0.50"></label>
-            <label class="candy-option"><span>Sour Skittles</span><input type="checkbox" value="Sour Skittles" data-price="0.50"></label>
-            <label class="candy-option"><span>Nerds Gummy Clusters</span><input type="checkbox" value="Nerds Gummy Clusters" data-price="0.50"></label>
-            <label class="candy-option"><span>Trolli Sour Crawlers</span><input type="checkbox" value="Trolli Sour Crawlers" data-price="0.50"></label>
-            <label class="candy-option"><span>Airheads Xtremes</span><input type="checkbox" value="Airheads Xtremes" data-price="0.50"></label>
-            <label class="candy-option"><span>Swedish Fish</span><input type="checkbox" value="Swedish Fish" data-price="0.50"></label>
-            <label class="candy-option"><span>Starburst (Pink Only)</span><input type="checkbox" value="Starburst (Pink)" data-price="0.50"></label>
-            <label class="candy-option"><span>Jolly Rancher Hard</span><input type="checkbox" value="Jolly Rancher" data-price="0.50"></label>
-            <label class="candy-option"><span>Mike and Ike</span><input type="checkbox" value="Mike and Ike" data-price="0.50"></label>
+            <label class="candy-option"><span>Skittles (Original)</span><input type="checkbox" value="Skittles (Original)"></label>
+            <label class="candy-option"><span>Sour Skittles</span><input type="checkbox" value="Sour Skittles"></label>
+            <label class="candy-option"><span>Nerds Gummy Clusters</span><input type="checkbox" value="Nerds Gummy Clusters"></label>
+            <label class="candy-option"><span>Trolli Sour Crawlers</span><input type="checkbox" value="Trolli Sour Crawlers"></label>
+            <label class="candy-option"><span>Airheads Xtremes</span><input type="checkbox" value="Airheads Xtremes"></label>
+            <label class="candy-option"><span>Swedish Fish</span><input type="checkbox" value="Swedish Fish"></label>
+            <label class="candy-option"><span>Starburst (Pink Only)</span><input type="checkbox" value="Starburst (Pink)"></label>
+            <label class="candy-option"><span>Jolly Rancher Hard</span><input type="checkbox" value="Jolly Rancher"></label>
+            <label class="candy-option"><span>Mike and Ike</span><input type="checkbox" value="Mike and Ike"></label>
         </div>
         <div class="cart-footer">
-            <button onclick="confirmCustomMix()" class="checkout-btn" style="background: var(--neon-pink); box-shadow: 6px 6px 0px black;">
-                Add to Haul
-            </button>
+            <button onclick="confirmCustomMix()" class="checkout-btn" style="background: var(--neon-pink); box-shadow: 6px 6px 0px black;">Add to Haul</button>
         </div>
     </div>
 
