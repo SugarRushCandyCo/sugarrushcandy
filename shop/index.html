@@ -35,7 +35,7 @@
         .drawer.open { right: 0; }
         .cart-footer { margin-top: auto; border-top: 4px solid black; padding-top: 20px; }
 
-        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; transition: all 0.2s; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); }
+        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; transition: all 0.2s; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); cursor: pointer; }
         .checkout-btn:not(:disabled):hover { background: var(--neon-yellow); color: var(--neon-pink); }
         .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; background: #666; }
 
@@ -62,7 +62,7 @@
                 <span class="font-black text-xl uppercase">Total:</span>
                 <span id="cart-total" class="font-black text-3xl text-pink-500">$0.00</span>
             </div>
-            <button id="checkout-btn" class="checkout-btn">Secure the Sweets</button>
+            <button id="checkout-btn" onclick="window.location.href='checkout.html'" class="checkout-btn">Secure the Sweets</button>
         </div>
     </div>
 
