@@ -19,97 +19,22 @@
 <body>
     <nav class="bg-white border-b-4 border-black p-4 flex justify-between items-center h-24 mb-12">
         <a href="/" class="text-3xl font-extrabold no-underline text-black uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
-        <a href="/shop" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors uppercase italic">Back to Shop</a>
+        <a href="/shop" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors uppercase italic text-center">Back to Shop</a>
     </nav>
-
     <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div class="space-y-12">
-            <div>
-                <h2 class="section-header">1. Where to ship?</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="FIRST NAME" class="brutal-input col-span-1">
-                    <input type="text" placeholder="LAST NAME" class="brutal-input col-span-1">
-                    <input type="email" placeholder="EMAIL ADDRESS" class="brutal-input col-span-2">
-                    <input type="text" placeholder="STREET ADDRESS" class="brutal-input col-span-2">
-                    <input type="text" placeholder="CITY" class="brutal-input col-span-1">
-                    <input type="text" placeholder="ZIP CODE" class="brutal-input col-span-1">
-                </div>
-            </div>
-
-            <div>
-                <h2 class="section-header">2. Payment (Placeholder)</h2>
-                <div class="brutal-card bg-yellow-50">
-                    <p class="font-bold mb-4 uppercase text-xs">Credit Card Info</p>
-                    <div class="space-y-4">
-                        <input type="text" placeholder="CARD NUMBER" class="brutal-input">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="MM/YY" class="brutal-input">
-                            <input type="text" placeholder="CVC" class="brutal-input">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[12px_12px_0px_black] transition-all">
-                Pay & Blast Off
-            </button>
+            <div><h2 class="section-header">1. Shipping</h2><div class="grid grid-cols-2 gap-4"><input type="text" placeholder="FIRST NAME" class="brutal-input"><input type="text" placeholder="LAST NAME" class="brutal-input"><input type="text" placeholder="ADDRESS" class="brutal-input col-span-2"></div></div>
+            <div><h2 class="section-header">2. Payment</h2><div class="brutal-card bg-yellow-50 space-y-4"><input type="text" placeholder="CARD NUMBER" class="brutal-input"><div class="grid grid-cols-2 gap-4"><input type="text" placeholder="MM/YY" class="brutal-input"><input type="text" placeholder="CVC" class="brutal-input"></div></div></div>
+            <button class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black] hover:shadow-[12px_12px_0px_black] transition-all">Pay & Blast Off</button>
         </div>
-
-        <div>
-            <div class="brutal-card sticky top-32">
-                <h2 class="section-header">Your Haul</h2>
-                <div id="checkout-items" class="space-y-4 mb-8">
-                    </div>
-                
-                <div class="border-t-4 border-black pt-4 space-y-2">
-                    <div class="flex justify-between font-bold">
-                        <span>SUBTOTAL</span>
-                        <span id="subtotal">$0.00</span>
-                    </div>
-                    <div class="flex justify-between font-bold">
-                        <span>SHIPPING</span>
-                        <span class="text-green-600">FREE</span>
-                    </div>
-                    <div class="flex justify-between font-black text-3xl italic pt-4">
-                        <span>TOTAL</span>
-                        <span id="total" class="text-pink-500">$0.00</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="brutal-card h-fit sticky top-32"><h2 class="section-header">Your Haul</h2><div id="checkout-items" class="space-y-4 mb-8"></div><div class="border-t-4 border-black pt-4 flex justify-between font-black text-3xl italic"><span>TOTAL</span><span id="total" class="text-pink-500">$0.00</span></div></div>
     </main>
-
     <script>
-        function loadSummary() {
-            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            const container = document.getElementById('checkout-items');
-            const subtotalEl = document.getElementById('subtotal');
-            const totalEl = document.getElementById('total');
-            
-            if (cart.length === 0) {
-                window.location.href = '/shop'; // Redirect if cart is empty
-                return;
-            }
-
-            let total = 0;
-            container.innerHTML = cart.map(item => {
-                total += item.price;
-                return `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-black uppercase leading-tight">${item.name}</p>
-                            ${item.contents.length > 0 ? `<p class="text-[10px] font-bold opacity-60">${item.contents.join(', ')}</p>` : ''}
-                        </div>
-                        <span class="font-bold">$${item.price.toFixed(2)}</span>
-                    </div>
-                `;
-            }).join('');
-
-            subtotalEl.innerText = `$${total.toFixed(2)}`;
-            totalEl.innerText = `$${total.toFixed(2)}`;
-        }
-
-        loadSummary();
+        const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+        if (cart.length === 0) window.location.href = '/shop';
+        let total = 0;
+        document.getElementById('checkout-items').innerHTML = cart.map(item => { total += item.price; return `<div class="flex justify-between"><div><p class="font-black uppercase">${item.name}</p></div><span class="font-bold">$${item.price.toFixed(2)}</span></div>`; }).join('');
+        document.getElementById('total').innerText = `$${total.toFixed(2)}`;
     </script>
 </body>
 </html>
