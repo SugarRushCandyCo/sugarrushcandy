@@ -5,98 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP | SUGAR RUSH</title>
     <link rel="icon" type="image/png" href="https://img.sanishtech.com/u/0a9cd5c6da8220c084fc3ddd80fcd83a.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; --ink-black: #1a1a1a; }
-        body { font-family: 'Space Grotesk', sans-serif; background: #f9f9f9; margin: 0; }
+        html { overflow-y: scroll; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #f9f9f9; margin: 0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .brutal-card { background: white; border: 4px solid black; box-shadow: 6px 6px 0px black; transition: 0.2s; }
-        .brutal-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px black; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .announcement-bar { background: var(--ink-black); color: var(--neon-yellow); overflow: hidden; white-space: nowrap; padding: 10px 0; border-bottom: 2px solid var(--neon-yellow); }
+        .scrolling-text { display: inline-block; animation: scroll-left 25s linear infinite; font-weight: 800; text-transform: uppercase; font-size: 0.875rem; }
+        @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .nav-link { font-weight: 700; text-transform: uppercase; font-size: 0.875rem; transition: all 0.2s; border-bottom: 4px solid transparent; padding-bottom: 4px; color: black; text-decoration: none; }
+        .active-link { color: var(--neon-pink) !important; border-bottom: 4px solid var(--neon-pink); }
+        
+        .brutal-card { background: white; border: 4px solid var(--ink-black); box-shadow: 6px 6px 0px var(--ink-black); transition: 0.2s; }
+        .brutal-card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--ink-black); }
+        
+        .category-divider { border-bottom: 8px solid black; margin-bottom: 40px; }
+        .category-label { background: black; color: white; display: inline-block; padding: 8px 24px; font-family: 'Syne'; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+
+        #toast { visibility: hidden; min-width: 200px; background-color: var(--neon-pink); color: white; text-align: center; border: 3px solid black; padding: 12px; position: fixed; z-index: 2000; left: 50%; transform: translateX(-50%); top: -100px; font-weight: 800; text-transform: uppercase; transition: top 0.4s; }
+        #toast.show { visibility: visible; top: 70px; }
+        
         .drawer { position: fixed; right: -500px; top: 0; width: 450px; height: 100%; background: white; border-left: 6px solid black; z-index: 1000; transition: 0.4s; padding: 30px; display: flex; flex-direction: column; }
         .drawer.open { right: 0; }
-        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); cursor: pointer; }
-        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .candy-option { display: flex; align-items: center; justify-content: space-between; padding: 10px; border: 2px solid black; margin-bottom: 8px; cursor: pointer; background: white; }
-        .candy-option:hover { background: var(--neon-yellow); }
+        .cart-footer { margin-top: auto; border-top: 4px solid black; padding-top: 20px; }
+
+        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; transition: all 0.2s; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); cursor: pointer; }
+        .checkout-btn:not(:disabled):hover { background: var(--neon-yellow); color: var(--neon-pink); }
+        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; background: #666; }
+
+        .candy-option { display: flex; align-items: center; justify-content: space-between; padding: 10px; border: 2px solid black; margin-bottom: 8px; cursor: pointer; transition: 0.2s; background: white; }
+        .candy-option:hover { background: var(--neon-yellow); transform: translateX(5px); }
+        .candy-option input:checked + span { font-weight: 900; color: var(--neon-pink); }
     </style>
 </head>
 <body class="no-scrollbar">
+    <div class="announcement-bar">
+        <div class="scrolling-text">⚠️ This site is currently a testing site for an up-and coming company, checkouts, ordering, and spending is not available. ⚠️</div>
+    </div>
+    <div id="toast">ITEM ADDED!</div>
+
     <div id="cart-drawer" class="drawer">
-        <h2 class="text-3xl font-black italic uppercase border-b-4 border-black pb-4 mb-4" style="font-family: 'Syne';">Your Haul</h2>
-        <div id="cart-items" class="flex-grow overflow-y-auto no-scrollbar"></div>
-        <div class="pt-4 border-t-4 border-black mt-auto">
-            <div class="flex justify-between mb-4 font-black text-2xl uppercase"><span>Subtotal:</span><span id="cart-subtotal">$0.00</span></div>
+        <div class="flex justify-between items-center mb-8 border-b-4 border-black pb-4">
+            <h2 class="text-3xl font-black italic uppercase" style="font-family: 'Syne';">Your Haul</h2>
+            <button onclick="toggleDrawer('cart-drawer')" class="text-xl font-bold hover:text-pink-500">CLOSE</button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto pr-2 no-scrollbar"></div>
+        <div class="cart-footer">
+            <div id="checkout-error" class="text-red-600 font-bold text-xs mb-2 hidden uppercase text-center">⚠️ Please select candies for your Custom Mix!</div>
+            <div class="flex justify-between items-center mb-6">
+                <span class="font-black text-xl uppercase">Total:</span>
+                <span id="cart-total" class="font-black text-3xl text-pink-500">$0.00</span>
+            </div>
             <button id="checkout-btn" onclick="window.location.href='/checkout'" class="checkout-btn">Secure the Sweets</button>
         </div>
     </div>
 
     <div id="custom-drawer" class="drawer">
-        <h2 class="text-2xl font-black italic uppercase mb-4" style="font-family: 'Syne';">Build Your Mix</h2>
-        <div id="candy-list" class="flex-grow overflow-y-auto no-scrollbar">
+        <div class="flex justify-between items-center mb-4 border-b-4 border-black pb-4">
+            <h2 class="text-2xl font-black italic uppercase" style="font-family: 'Syne';">Build Your Mix</h2>
+            <button onclick="toggleDrawer('custom-drawer')" class="text-xl font-bold">CANCEL [X]</button>
+        </div>
+        <p class="text-sm font-bold mb-4 italic text-pink-500">Base: $8.00 + $0.50 per selection</p>
+        <div id="candy-list" class="flex-grow overflow-y-auto pr-2 no-scrollbar">
             <label class="candy-option"><span>Sour Patch Kids</span><input type="checkbox" value="Sour Patch Kids"></label>
             <label class="candy-option"><span>Haribo Goldbears</span><input type="checkbox" value="Haribo Goldbears"></label>
+            <label class="candy-option"><span>Haribo Twin Snakes</span><input type="checkbox" value="Haribo Twin Snakes"></label>
+            <label class="candy-option"><span>Skittles (Original)</span><input type="checkbox" value="Skittles (Original)"></label>
+            <label class="candy-option"><span>Sour Skittles</span><input type="checkbox" value="Sour Skittles"></label>
             <label class="candy-option"><span>Nerds Gummy Clusters</span><input type="checkbox" value="Nerds Gummy Clusters"></label>
+            <label class="candy-option"><span>Trolli Sour Crawlers</span><input type="checkbox" value="Trolli Sour Crawlers"></label>
+            <label class="candy-option"><span>Airheads Xtremes</span><input type="checkbox" value="Airheads Xtremes"></label>
             <label class="candy-option"><span>Swedish Fish</span><input type="checkbox" value="Swedish Fish"></label>
+            <label class="candy-option"><span>Starburst (Pink Only)</span><input type="checkbox" value="Starburst (Pink)"></label>
+            <label class="candy-option"><span>Jolly Rancher Hard</span><input type="checkbox" value="Jolly Rancher"></label>
+            <label class="candy-option"><span>Mike and Ike</span><input type="checkbox" value="Mike and Ike"></label>
         </div>
-        <button onclick="confirmCustomMix()" class="checkout-btn mt-4" style="background: var(--neon-pink);">Add to Haul</button>
+        <div class="cart-footer">
+            <button onclick="confirmCustomMix()" class="checkout-btn" style="background: var(--neon-pink); box-shadow: 6px 6px 0px black;">
+                Add to Haul
+            </button>
+        </div>
     </div>
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black p-4 flex justify-between items-center h-24">
-        <a href="/" class="text-3xl font-extrabold uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
-        <div class="space-x-12"><a href="/" class="nav-link">Home</a><a href="/shop" class="nav-link active-link">Shop All</a></div>
-        <button onclick="toggleDrawer('cart-drawer')" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 uppercase italic">HAUL (<span id="cart-count">0</span>)</button>
+        <div class="w-80 flex-shrink-0">
+            <a href="/" class="text-3xl font-extrabold no-underline text-black uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
+        </div>
+        <div class="flex items-center space-x-12">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/shop" class="nav-link active-link">Shop All</a>
+        </div>
+        <div class="w-80 flex-shrink-0 flex justify-end">
+            <button onclick="toggleDrawer('cart-drawer')" class="font-bold border-2 border-black px-6 py-2 bg-black text-white hover:bg-pink-500 transition-colors uppercase italic">
+                HAUL (<span id="cart-count">0</span>)
+            </button>
+        </div>
     </nav>
 
     <main class="max-w-4xl mx-auto py-12 px-6">
+        <div class="category-divider"><span class="category-label">Mixes</span></div>
         <div class="space-y-6">
             <div class="brutal-card p-8 bg-pink-100 flex justify-between items-center">
-                <div><h3 class="text-4xl font-black italic uppercase" style="font-family: 'Syne';">Sour Mix</h3></div>
-                <div class="text-right"><p class="text-3xl font-black mb-4">$12.00</p><button onclick="addToCart('Sour Mix', 12.00)" class="bg-black text-white px-8 py-3 font-black uppercase">Add</button></div>
+                <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Sour Mix</h3><p class="font-bold opacity-70 italic">Extreme Tang & Neon Vibes.</p></div>
+                <div class="text-right"><p class="text-3xl font-black mb-4">$12.00</p><button onclick="addToCart('Sour Mix', 12.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-[#ff00ff] transition-all">Add to Haul</button></div>
+            </div>
+            <div class="brutal-card p-8 bg-blue-100 flex justify-between items-center">
+                <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Sweet Mix</h3><p class="font-bold opacity-70 italic">Classic Sugary Bliss.</p></div>
+                <div class="text-right"><p class="text-3xl font-black mb-4">$12.00</p><button onclick="addToCart('Sweet Mix', 12.00)" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-blue-500 transition-all">Add to Haul</button></div>
             </div>
             <div class="brutal-card p-8 bg-yellow-100 flex justify-between items-center">
-                <div><h3 class="text-4xl font-black italic uppercase" style="font-family: 'Syne';">Custom Mix</h3></div>
-                <div class="text-right"><p class="text-3xl font-black mb-4">$8.00+</p><button onclick="toggleDrawer('custom-drawer')" class="bg-black text-white px-8 py-3 font-black uppercase">Build</button></div>
+                <div><h3 class="text-4xl font-black italic mb-2 uppercase" style="font-family: 'Syne';">Custom Mix</h3><p class="font-bold opacity-70 italic">Built by You. Packed by Us.</p></div>
+                <div class="text-right"><p class="text-3xl font-black mb-4">$8.00+</p><button onclick="toggleDrawer('custom-drawer')" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-yellow-500 transition-all">Build Mix</button></div>
             </div>
         </div>
     </main>
 
     <script>
-        function toggleDrawer(id) { document.getElementById(id).classList.toggle('open'); if(id === 'cart-drawer') renderCart(); }
-        function confirmCustomMix() {
-            const selected = Array.from(document.querySelectorAll('#candy-list input:checked')).map(c => c.value);
-            if(selected.length === 0) return;
-            addToCart('Custom Mix', 8.00 + (selected.length * 0.50), selected);
-            toggleDrawer('custom-drawer');
+        function toggleDrawer(id) {
+            const d = document.getElementById(id);
+            d.classList.toggle('open');
+            if(id === 'cart-drawer') renderCart();
         }
+
+        function confirmCustomMix() {
+            const selected = Array.from(document.querySelectorAll('#candy-list input:checked'));
+            const candies = selected.map(c => c.value);
+            if(candies.length === 0) { alert("Select at least one candy!"); return; }
+            let finalPrice = 8.00 + (selected.length * 0.50);
+            addToCart('Custom Mix', finalPrice, candies);
+            toggleDrawer('custom-drawer');
+            selected.forEach(c => c.checked = false);
+        }
+
         function addToCart(name, price, contents = []) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart.push({ id: Date.now(), name, price, contents });
+            cart.push({ id: Date.now(), name: name, price: price, contents: contents });
             localStorage.setItem('candy-cart', JSON.stringify(cart));
-            document.getElementById('cart-count').innerText = cart.length;
+            updateHeaderCount();
+            
+            const t = document.getElementById("toast"); 
+            t.innerText = name + " ADDED!"; 
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 2000);
+            
             if (document.getElementById('cart-drawer').classList.contains('open')) renderCart();
         }
+
         function removeFromCart(id) {
-            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]').filter(item => item.id !== id);
+            let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            cart = cart.filter(item => item.id !== id);
             localStorage.setItem('candy-cart', JSON.stringify(cart));
-            document.getElementById('cart-count').innerText = cart.length;
+            updateHeaderCount();
             renderCart();
         }
+
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             const container = document.getElementById('cart-items');
+            const totalDisplay = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
             let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center py-10 font-bold opacity-30 uppercase">Haul is Empty</p>';
+                totalDisplay.innerText = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
             container.innerHTML = cart.map(item => {
                 total += item.price;
-                return `<div class="py-4 border-b-2 border-black flex justify-between items-center">
-                    <div><p class="uppercase font-black text-sm">${item.name}</p></div>
-                    <div class="text-right"><p class="font-bold text-pink-500">$${item.price.toFixed(2)}</p>
-                    <button onclick="removeFromCart(${item.id})" class="text-[10px] uppercase underline">Remove</button></div>
-                </div>`;
+                const contentsMarkup = item.contents && item.contents.length > 0 
+                    ? `<p class="text-[10px] font-bold opacity-60 leading-tight mb-1">${item.contents.join(', ')}</p>` 
+                    : '';
+                
+                return `
+                    <div class="py-4 border-b-2 border-black">
+                        <div class="flex justify-between items-center mb-1">
+                            <p class="uppercase font-black text-sm">${item.name}</p>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline uppercase">Remove</button>
+                        </div>
+                        ${contentsMarkup}
+                        <p class="font-bold text-xs text-pink-500">$${item.price.toFixed(2)}</p>
+                    </div>`;
             }).join('');
-            document.getElementById('cart-subtotal').innerText = `$${total.toFixed(2)}`;
-            document.getElementById('checkout-btn').disabled = cart.length === 0;
+
+            totalDisplay.innerText = `$${total.toFixed(2)}`;
+            checkoutBtn.disabled = false;
         }
+
+        function updateHeaderCount() {
+            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        updateHeaderCount();
     </script>
 </body>
 </html>
