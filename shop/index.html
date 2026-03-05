@@ -35,7 +35,7 @@
         .drawer.open { right: 0; }
         .cart-footer { margin-top: auto; border-top: 4px solid black; padding-top: 20px; }
 
-        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; transition: all 0.2s; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); }
+        .checkout-btn { width: 100%; background: black; color: white; padding: 24px 0; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; font-style: italic; transition: all 0.2s; border: 4px solid black; box-shadow: 6px 6px 0px var(--neon-pink); cursor: pointer; }
         .checkout-btn:not(:disabled):hover { background: var(--neon-yellow); color: var(--neon-pink); }
         .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; background: #666; }
 
@@ -73,18 +73,18 @@
         </div>
         <p class="text-sm font-bold mb-4 italic text-pink-500">Base: $8.00 + $0.50 per selection</p>
         <div id="candy-list" class="flex-grow overflow-y-auto pr-2 no-scrollbar">
-            <label class="candy-option"><span>Sour Patch Kids</span><input type="checkbox" value="Sour Patch Kids" data-price="0.50"></label>
-            <label class="candy-option"><span>Haribo Goldbears</span><input type="checkbox" value="Haribo Goldbears" data-price="0.50"></label>
-            <label class="candy-option"><span>Haribo Twin Snakes</span><input type="checkbox" value="Haribo Twin Snakes" data-price="0.50"></label>
-            <label class="candy-option"><span>Skittles (Original)</span><input type="checkbox" value="Skittles (Original)" data-price="0.50"></label>
-            <label class="candy-option"><span>Sour Skittles</span><input type="checkbox" value="Sour Skittles" data-price="0.50"></label>
-            <label class="candy-option"><span>Nerds Gummy Clusters</span><input type="checkbox" value="Nerds Gummy Clusters" data-price="0.50"></label>
-            <label class="candy-option"><span>Trolli Sour Crawlers</span><input type="checkbox" value="Trolli Sour Crawlers" data-price="0.50"></label>
-            <label class="candy-option"><span>Airheads Xtremes</span><input type="checkbox" value="Airheads Xtremes" data-price="0.50"></label>
-            <label class="candy-option"><span>Swedish Fish</span><input type="checkbox" value="Swedish Fish" data-price="0.50"></label>
-            <label class="candy-option"><span>Starburst (Pink Only)</span><input type="checkbox" value="Starburst (Pink)" data-price="0.50"></label>
-            <label class="candy-option"><span>Jolly Rancher Hard</span><input type="checkbox" value="Jolly Rancher" data-price="0.50"></label>
-            <label class="candy-option"><span>Mike and Ike</span><input type="checkbox" value="Mike and Ike" data-price="0.50"></label>
+            <label class="candy-option"><span>Sour Patch Kids</span><input type="checkbox" value="Sour Patch Kids"></label>
+            <label class="candy-option"><span>Haribo Goldbears</span><input type="checkbox" value="Haribo Goldbears"></label>
+            <label class="candy-option"><span>Haribo Twin Snakes</span><input type="checkbox" value="Haribo Twin Snakes"></label>
+            <label class="candy-option"><span>Skittles (Original)</span><input type="checkbox" value="Skittles (Original)"></label>
+            <label class="candy-option"><span>Sour Skittles</span><input type="checkbox" value="Sour Skittles"></label>
+            <label class="candy-option"><span>Nerds Gummy Clusters</span><input type="checkbox" value="Nerds Gummy Clusters"></label>
+            <label class="candy-option"><span>Trolli Sour Crawlers</span><input type="checkbox" value="Trolli Sour Crawlers"></label>
+            <label class="candy-option"><span>Airheads Xtremes</span><input type="checkbox" value="Airheads Xtremes"></label>
+            <label class="candy-option"><span>Swedish Fish</span><input type="checkbox" value="Swedish Fish"></label>
+            <label class="candy-option"><span>Starburst (Pink Only)</span><input type="checkbox" value="Starburst (Pink)"></label>
+            <label class="candy-option"><span>Jolly Rancher Hard</span><input type="checkbox" value="Jolly Rancher"></label>
+            <label class="candy-option"><span>Mike and Ike</span><input type="checkbox" value="Mike and Ike"></label>
         </div>
         <div class="cart-footer">
             <button onclick="confirmCustomMix()" class="checkout-btn" style="background: var(--neon-pink); box-shadow: 6px 6px 0px black;">
@@ -130,26 +130,33 @@
         function toggleDrawer(id) {
             const d = document.getElementById(id);
             d.classList.toggle('open');
-            if(id === 'cart-drawer' && d.classList.contains('open')) renderCart();
+            if(id === 'cart-drawer') renderCart();
         }
+
         function confirmCustomMix() {
             const selected = Array.from(document.querySelectorAll('#candy-list input:checked'));
             const candies = selected.map(c => c.value);
+            if(candies.length === 0) { alert("Select at least one candy!"); return; }
             let finalPrice = 8.00 + (selected.length * 0.50);
             addToCart('Custom Mix', finalPrice, candies);
             toggleDrawer('custom-drawer');
             selected.forEach(c => c.checked = false);
         }
+
         function addToCart(name, price, contents = []) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-            cart.push({ id: Date.now(), name, price, contents });
+            cart.push({ id: Date.now(), name: name, price: price, contents: contents });
             localStorage.setItem('candy-cart', JSON.stringify(cart));
             updateHeaderCount();
+            
             const t = document.getElementById("toast"); 
-            t.innerText = name + " ADDED!"; t.classList.add("show");
+            t.innerText = name + " ADDED!"; 
+            t.classList.add("show");
             setTimeout(() => t.classList.remove("show"), 2000);
+            
             if (document.getElementById('cart-drawer').classList.contains('open')) renderCart();
         }
+
         function removeFromCart(id) {
             let cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             cart = cart.filter(item => item.id !== id);
@@ -157,32 +164,47 @@
             updateHeaderCount();
             renderCart();
         }
+
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
             const container = document.getElementById('cart-items');
             const totalDisplay = document.getElementById('cart-total');
             const checkoutBtn = document.getElementById('checkout-btn');
-            const errorMsg = document.getElementById('checkout-error');
             let total = 0;
-            let canCheckout = true;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center py-10 font-bold opacity-30 uppercase">Haul is Empty</p>';
+                totalDisplay.innerText = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
             container.innerHTML = cart.map(item => {
                 total += item.price;
-                if (item.name === 'Custom Mix' && item.contents.length === 0) canCheckout = false;
-                return `<div class="py-4 border-b-2 border-black"><div class="flex justify-between items-center mb-1"><p class="uppercase font-black text-sm">${item.name}</p><button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline uppercase">Remove</button></div>${item.contents.length > 0 ? `<p class="text-[10px] font-bold opacity-60 leading-tight mb-1">${item.contents.join(', ')}</p>` : ''}<p class="font-bold text-xs text-pink-500">$${item.price.toFixed(2)}</p></div>`;
+                const contentsMarkup = item.contents && item.contents.length > 0 
+                    ? `<p class="text-[10px] font-bold opacity-60 leading-tight mb-1">${item.contents.join(', ')}</p>` 
+                    : '';
+                
+                return `
+                    <div class="py-4 border-b-2 border-black">
+                        <div class="flex justify-between items-center mb-1">
+                            <p class="uppercase font-black text-sm">${item.name}</p>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 font-black text-xs hover:underline uppercase">Remove</button>
+                        </div>
+                        ${contentsMarkup}
+                        <p class="font-bold text-xs text-pink-500">$${item.price.toFixed(2)}</p>
+                    </div>`;
             }).join('');
-            if (cart.length === 0) container.innerHTML = '<p class="text-center py-10 font-bold opacity-30 uppercase">Haul is Empty</p>';
+
             totalDisplay.innerText = `$${total.toFixed(2)}`;
-            if (!canCheckout && cart.length > 0) {
-                checkoutBtn.disabled = true;
-                errorMsg.classList.remove('hidden');
-            } else {
-                checkoutBtn.disabled = cart.length === 0;
-                errorMsg.classList.add('hidden');
-            }
+            checkoutBtn.disabled = false;
         }
+
         function updateHeaderCount() {
-            document.getElementById('cart-count').innerText = JSON.parse(localStorage.getItem('candy-cart') || '[]').length;
+            const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
+            document.getElementById('cart-count').innerText = cart.length;
         }
+
         updateHeaderCount();
     </script>
 </body>
