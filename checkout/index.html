@@ -9,19 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; }
-        body { font-family: 'Space Grotesk', sans-serif; background: #f0f0f0; margin: 0; padding-bottom: 5rem; }
+        body { font-family: 'Space Grotesk', sans-serif; background: #f0f0f0; padding-bottom: 5rem; }
         .brutal-input { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; outline: none; background: white; text-transform: uppercase; margin-bottom: 1rem; }
         .brutal-input:focus { border-color: var(--neon-pink); box-shadow: 4px 4px 0px black; }
         .section-header { font-family: 'Syne'; font-weight: 900; text-transform: uppercase; font-style: italic; border-bottom: 4px solid black; display: inline-block; margin-bottom: 1.5rem; }
         .brutal-card { background: white; border: 4px solid black; box-shadow: 8px 8px 0px black; padding: 2rem; }
-        
-        /* Address Preview Box */
         .preview-box { position: absolute; width: 100%; background: white; border: 4px solid black; z-index: 50; top: 100%; margin-top: -1rem; display: none; }
-        .preview-item { padding: 10px; cursor: pointer; border-bottom: 2px solid black; font-weight: 700; font-size: 0.8rem; }
+        .preview-item { padding: 10px; cursor: pointer; border-bottom: 2px solid black; font-weight: 700; }
         .preview-item:hover { background: var(--neon-yellow); }
     </style>
 </head>
-<body class="no-scrollbar">
+<body>
     <nav class="bg-white border-b-4 border-black p-4 flex justify-between items-center h-24 mb-12">
         <a href="/" class="text-3xl font-extrabold uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
         <a href="/shop" class="font-bold border-2 border-black px-6 py-2 bg-black text-white uppercase italic">Back</a>
@@ -30,52 +28,45 @@
     <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div class="space-y-12">
             <div>
-                <h2 class="section-header">Shipping Info</h2>
+                <h2 class="section-header">1. Contact & Shipping</h2>
+                <input type="email" placeholder="EMAIL ADDRESS" class="brutal-input">
                 <div class="grid grid-cols-2 gap-4">
                     <input type="text" placeholder="FIRST NAME" class="brutal-input">
                     <input type="text" placeholder="LAST NAME" class="brutal-input">
                 </div>
-                
                 <div class="relative">
-                    <input id="address-input" type="text" placeholder="STREET ADDRESS" class="brutal-input" autocomplete="off">
+                    <input id="address-input" type="text" placeholder="STREET ADDRESS (e.g. 23 Goofy)" class="brutal-input" autocomplete="off">
                     <div id="address-previews" class="preview-box"></div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <input id="city-input" type="text" placeholder="CITY" class="brutal-input">
                     <select id="state-select" class="brutal-input">
                         <option value="" disabled selected>STATE</option>
-                        <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option>
-                        <option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
-                    </select>
+                        <option value="NY">New York</option><option value="CA">California</option><option value="FL">Florida</option><option value="TX">Texas</option>
+                        </select>
+                    <input id="zip-input" type="text" placeholder="ZIP CODE" class="brutal-input">
                 </div>
-                <input id="zip-input" type="text" placeholder="ZIP CODE" class="brutal-input">
             </div>
 
-            <button onclick="alert('ORDER SECURED!')" class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black]">Pay & Blast Off</button>
+            <div>
+                <h2 class="section-header">2. Payment</h2>
+                <div class="brutal-card bg-yellow-50">
+                    <input type="text" placeholder="CARD NUMBER" class="brutal-input">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" placeholder="MM/YY" class="brutal-input"><input type="text" placeholder="CVC" class="brutal-input">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black]">Pay & Blast Off</button>
         </div>
 
         <div class="brutal-card h-fit sticky top-12">
-            <h2 class="section-header">Your Haul</h2>
-            <div id="checkout-items" class="space-y-4 mb-8"></div>
+            <h2 class="section-header">Haul Summary</h2>
+            <div id="checkout-items" class="space-y-2 mb-8"></div>
             <div class="border-t-4 border-black pt-4 space-y-2">
-                <div class="flex justify-between font-bold text-sm uppercase"><span>Subtotal</span><span id="sub-val">$0.00</span></div>
-                <div class="flex justify-between font-bold text-sm uppercase"><span>Shipping (From Ithaca)</span><span id="ship-val">$0.00</span></div>
+                <div class="flex justify-between font-bold text-sm"><span>Subtotal</span><span id="sub-val">$0.00</span></div>
+                <div class="flex justify-between font-bold text-sm"><span>Distance Shipping</span><span id="ship-val">$0.00</span></div>
                 <div class="flex justify-between font-black text-4xl italic pt-4"><span>TOTAL</span><span id="total-val" class="text-pink-500">$0.00</span></div>
             </div>
         </div>
@@ -83,69 +74,61 @@
 
     <script>
         const cart = JSON.parse(localStorage.getItem('candy-cart') || '[]');
-        if (cart.length === 0) window.location.href = '/shop';
-
         let subtotal = 0;
         document.getElementById('checkout-items').innerHTML = cart.map(item => {
             subtotal += item.price;
             return `<div class="flex justify-between uppercase font-bold text-xs"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`;
         }).join('');
 
-        // ADDRESS PREVIEWS (Mock Data)
+        const ITHACA_COORDS = { lat: 42.44, lon: -76.50 };
         const mockAddresses = [
-            { street: "23 GOOFY STREET", city: "ITHACA", state: "NY", zip: "14850" },
-            { street: "100 CANDY LANE", city: "SYRACUSE", state: "NY", zip: "13202" },
-            { street: "555 SUGAR DRIVE", city: "LOS ANGELES", state: "CA", zip: "90001" },
-            { street: "123 NEON WAY", city: "MIAMI", state: "FL", zip: "33101" }
+            { street: "23 GOOFY STREET", city: "ITHACA", state: "NY", zip: "14850", lat: 42.44, lon: -76.50 },
+            { street: "1600 PENNSYLVANIA AVE", city: "WASHINGTON", state: "DC", zip: "20500", lat: 38.89, lon: -77.03 },
+            { street: "1 HOLLYWOOD BLVD", city: "LOS ANGELES", state: "CA", zip: "90028", lat: 34.10, lon: -118.32 }
         ];
 
         const addressInput = document.getElementById('address-input');
         const previewBox = document.getElementById('address-previews');
-        const cityInput = document.getElementById('city-input');
-        const stateSelect = document.getElementById('state-select');
         const zipField = document.getElementById('zip-input');
 
         addressInput.addEventListener('input', (e) => {
             const val = e.target.value.toUpperCase();
             previewBox.innerHTML = '';
             if (val.length < 3) { previewBox.style.display = 'none'; return; }
-
             const matches = mockAddresses.filter(a => a.street.includes(val));
             if (matches.length > 0) {
                 previewBox.style.display = 'block';
                 matches.forEach(m => {
                     const div = document.createElement('div');
                     div.className = 'preview-item';
-                    div.innerText = `${m.street}, ${m.city} ${m.state} ${m.zip}`;
+                    div.innerText = `${m.street}, ${m.city} ${m.state}`;
                     div.onclick = () => {
                         addressInput.value = m.street;
-                        cityInput.value = m.city;
-                        stateSelect.value = m.state;
+                        document.getElementById('city-input').value = m.city;
+                        document.getElementById('state-select').value = m.state;
                         zipField.value = m.zip;
                         previewBox.style.display = 'none';
-                        updateTotals();
+                        updateShipping(m.lat, m.lon);
                     };
                     previewBox.appendChild(div);
                 });
-            } else {
-                previewBox.style.display = 'none';
             }
         });
 
-        function updateTotals() {
-            const zip = zipField.value.trim();
-            let shipping = 0;
-            if (zip.length > 0) {
-                const zone = parseInt(zip[0]) || 0;
-                shipping = 5.00 + (Math.abs(zone - 1) * 2.50);
-            }
+        function updateShipping(lat, lon) {
+            // Haversine Distance
+            const R = 3958.8; // Miles
+            const dLat = (lat - ITHACA_COORDS.lat) * Math.PI / 180;
+            const dLon = (lon - ITHACA_COORDS.lon) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(ITHACA_COORDS.lat * Math.PI/180) * Math.cos(lat * Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const miles = R * c;
+
+            const shipping = 5.00 + (miles * 0.02); // $5 base + 2 cents per mile
             document.getElementById('sub-val').innerText = `$${subtotal.toFixed(2)}`;
             document.getElementById('ship-val').innerText = `$${shipping.toFixed(2)}`;
             document.getElementById('total-val').innerText = `$${(subtotal + shipping).toFixed(2)}`;
         }
-
-        zipField.addEventListener('input', updateTotals);
-        updateTotals();
     </script>
 </body>
 </html>
