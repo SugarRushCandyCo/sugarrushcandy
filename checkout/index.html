@@ -10,12 +10,13 @@
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; }
         body { font-family: 'Space Grotesk', sans-serif; background: #f0f0f0; margin: 0; padding-bottom: 5rem; }
-        .brutal-input { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; outline: none; background: white; text-transform: uppercase; }
+        .brutal-input { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; outline: none; background: white; text-transform: uppercase; margin-bottom: 1rem; }
         .brutal-input:focus { border-color: var(--neon-pink); box-shadow: 4px 4px 0px black; }
+        .section-header { font-family: 'Syne'; font-weight: 900; text-transform: uppercase; font-style: italic; border-bottom: 4px solid black; display: inline-block; margin-bottom: 1.5rem; }
         .brutal-card { background: white; border: 4px solid black; box-shadow: 8px 8px 0px black; padding: 2rem; }
     </style>
 </head>
-<body class="no-scrollbar">
+<body>
     <nav class="bg-white border-b-4 border-black p-4 flex justify-between items-center h-24 mb-12">
         <a href="/" class="text-3xl font-extrabold uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
         <a href="/shop" class="font-bold border-2 border-black px-6 py-2 bg-black text-white uppercase italic">Back</a>
@@ -23,29 +24,41 @@
 
     <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div class="space-y-12">
-            <div><h2 class="text-2xl font-black italic uppercase border-b-4 border-black mb-6">Shipping Information</h2>
+            <div>
+                <h2 class="section-header">Contact & Shipping</h2>
+                <input type="email" placeholder="EMAIL ADDRESS" class="brutal-input">
                 <div class="grid grid-cols-2 gap-4">
                     <input type="text" placeholder="FIRST NAME" class="brutal-input">
                     <input type="text" placeholder="LAST NAME" class="brutal-input">
-                    <input type="text" placeholder="ADDRESS" class="brutal-input col-span-2">
-                    <input id="zip-input" type="text" placeholder="ZIP CODE" class="brutal-input col-span-2">
+                </div>
+                <input type="text" placeholder="STREET ADDRESS" class="brutal-input">
+                <div class="grid grid-cols-3 gap-4">
+                    <input type="text" placeholder="CITY" class="brutal-input">
+                    <input type="text" placeholder="STATE" class="brutal-input">
+                    <input id="zip-input" type="text" placeholder="ZIP CODE" class="brutal-input">
                 </div>
             </div>
-            <div><h2 class="text-2xl font-black italic uppercase border-b-4 border-black mb-6">Payment</h2>
-                <div class="brutal-card bg-yellow-50 space-y-4">
+
+            <div>
+                <h2 class="section-header">Payment Details</h2>
+                <div class="brutal-card bg-yellow-50">
                     <input type="text" placeholder="CARD NUMBER" class="brutal-input">
-                    <div class="grid grid-cols-2 gap-4"><input type="text" placeholder="MM/YY" class="brutal-input"><input type="text" placeholder="CVC" class="brutal-input"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" placeholder="MM/YY" class="brutal-input">
+                        <input type="text" placeholder="CVC" class="brutal-input">
+                    </div>
                 </div>
             </div>
+            
             <button class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black]">Pay & Blast Off</button>
         </div>
 
         <div class="brutal-card h-fit sticky top-12">
-            <h2 class="text-2xl font-black italic uppercase border-b-4 border-black mb-6">Haul Summary</h2>
+            <h2 class="section-header">Your Haul</h2>
             <div id="checkout-items" class="space-y-4 mb-8"></div>
             <div class="border-t-4 border-black pt-4 space-y-2">
-                <div class="flex justify-between font-bold"><span>Subtotal</span><span id="subtotal-val">$0.00</span></div>
-                <div class="flex justify-between font-bold"><span>Shipping (From Ithaca)</span><span id="shipping-val">$0.00</span></div>
+                <div class="flex justify-between font-bold text-sm uppercase"><span>Subtotal</span><span id="sub-val">$0.00</span></div>
+                <div class="flex justify-between font-bold text-sm uppercase"><span>Shipping (From Ithaca)</span><span id="ship-val">$0.00</span></div>
                 <div class="flex justify-between font-black text-4xl italic pt-4"><span>TOTAL</span><span id="total-val" class="text-pink-500">$0.00</span></div>
             </div>
         </div>
@@ -58,25 +71,24 @@
         let subtotal = 0;
         document.getElementById('checkout-items').innerHTML = cart.map(item => {
             subtotal += item.price;
-            return `<div class="flex justify-between font-bold uppercase text-sm"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`;
+            return `<div class="flex justify-between uppercase font-bold text-xs border-b pb-2"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`;
         }).join('');
 
-        const zipInput = document.getElementById('zip-input');
-        function calculateShipping() {
-            const zip = zipInput.value.trim();
+        const zipField = document.getElementById('zip-input');
+        function updateTotals() {
+            const zip = zipField.value.trim();
             let shipping = 0;
             if (zip.length > 0) {
                 const zone = parseInt(zip[0]) || 0;
-                // Ithaca is Zone 1. Cost = $5 base + $2 for every zone away from 1.
                 shipping = 5.00 + (Math.abs(zone - 1) * 2.50);
             }
-            document.getElementById('subtotal-val').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('shipping-val').innerText = `$${shipping.toFixed(2)}`;
+            document.getElementById('sub-val').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('ship-val').innerText = `$${shipping.toFixed(2)}`;
             document.getElementById('total-val').innerText = `$${(subtotal + shipping).toFixed(2)}`;
         }
 
-        zipInput.addEventListener('input', calculateShipping);
-        calculateShipping();
+        zipField.addEventListener('input', updateTotals);
+        updateTotals();
     </script>
 </body>
 </html>
