@@ -9,20 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { --neon-pink: #ff00ff; --neon-yellow: #ccff00; }
-        body { font-family: 'Space Grotesk', sans-serif; background: #f0f0f0; padding-bottom: 5rem; }
+        body { font-family: 'Space Grotesk', sans-serif; background: #f0f0f0; padding-bottom: 5rem; overflow-x: hidden; }
         .brutal-input { border: 4px solid black; padding: 1rem; width: 100%; font-weight: 700; outline: none; background: white; text-transform: uppercase; margin-bottom: 1rem; }
         .brutal-input:focus { border-color: var(--neon-pink); box-shadow: 4px 4px 0px black; }
         .section-header { font-family: 'Syne'; font-weight: 900; text-transform: uppercase; font-style: italic; border-bottom: 4px solid black; display: inline-block; margin-bottom: 1.5rem; }
         .brutal-card { background: white; border: 4px solid black; box-shadow: 8px 8px 0px black; padding: 2rem; }
         
-        /* REAL WORLD SUGGESTIONS BOX */
-        .preview-box { position: absolute; width: 100%; background: white; border: 4px solid black; z-index: 100; top: 100%; margin-top: -1rem; display: none; max-height: 250px; overflow-y: auto; box-shadow: 10px 10px 0px rgba(0,0,0,0.1); }
-        .preview-item { padding: 12px; cursor: pointer; border-bottom: 2px solid black; font-weight: 700; font-size: 0.75rem; line-height: 1.2; }
+        /* SNAPPY PREVIEW BOX */
+        .preview-box { position: absolute; width: 100%; background: white; border: 4px solid black; z-index: 100; top: 100%; margin-top: -1rem; display: none; max-height: 250px; overflow-y: auto; box-shadow: 10px 10px 0px black; }
+        .preview-item { padding: 12px; cursor: pointer; border-bottom: 2px solid black; font-weight: 700; font-size: 0.75rem; line-height: 1.2; text-transform: uppercase; }
         .preview-item:hover { background: var(--neon-yellow); }
     </style>
 </head>
 <body>
-    <nav class="bg-white border-b-4 border-black p-4 flex justify-between items-center h-24 mb-12">
+    <nav class="bg-white border-b-4 border-black p-4 flex justify-between items-center h-24 mb-12 sticky top-0 z-50">
         <a href="/" class="text-3xl font-extrabold uppercase italic">SUGAR<span class="text-pink-500">RUSH</span></a>
         <a href="/shop" class="font-bold border-2 border-black px-6 py-2 bg-black text-white uppercase italic">Back</a>
     </nav>
@@ -38,14 +38,14 @@
                 </div>
                 
                 <div class="relative">
-                    <input id="address-input" type="text" placeholder="START TYPING ADDRESS..." class="brutal-input" autocomplete="off">
+                    <input id="address-input" type="text" placeholder="STREET ADDRESS" class="brutal-input" autocomplete="off">
                     <div id="address-previews" class="preview-box"></div>
                 </div>
 
                 <div class="grid grid-cols-3 gap-4">
                     <input id="city-field" type="text" placeholder="CITY" class="brutal-input">
                     <select id="state-field" class="brutal-input">
-                        <option value="" disabled selected>STATE</option>
+                        <option value="" disabled selected>ST</option>
                         <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
                     </select>
                     <input id="zip-field" type="text" placeholder="ZIP" class="brutal-input">
@@ -63,17 +63,18 @@
                 </div>
             </div>
             
-            <button class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black]">Pay & Blast Off</button>
+            <button onclick="alert('ORDER SECURED!')" class="w-full bg-[#ccff00] border-4 border-black p-6 font-black text-3xl italic uppercase shadow-[10px_10px_0px_black] hover:bg-pink-500 transition-colors">Pay & Blast Off</button>
         </div>
 
-        <div class="brutal-card h-fit sticky top-12">
+        <div class="brutal-card h-fit sticky top-32">
             <h2 class="section-header">Haul Summary</h2>
             <div id="checkout-items" class="space-y-2 mb-8 uppercase font-bold text-xs"></div>
             <div class="border-t-4 border-black pt-4 space-y-2">
                 <div class="flex justify-between font-bold text-sm"><span>Subtotal</span><span id="sub-val">$0.00</span></div>
-                <div class="flex justify-between font-bold text-sm italic"><span>Shipping (Miles from Ithaca)</span><span id="ship-val">$0.00</span></div>
+                <div class="flex justify-between font-bold text-sm italic"><span>Shipping (Calculated Distance)</span><span id="ship-val">$0.00</span></div>
                 <div class="flex justify-between font-black text-4xl italic pt-4"><span>TOTAL</span><span id="total-val" class="text-pink-500">$0.00</span></div>
             </div>
+            <p id="dist-msg" class="mt-4 text-[10px] font-bold uppercase text-gray-400"></p>
         </div>
     </main>
 
@@ -90,62 +91,77 @@
         const addrInput = document.getElementById('address-input');
         const previewBox = document.getElementById('address-previews');
 
-        // REAL-WORLD ADDRESS AUTOCOMPLETE (Nominatim)
-        let debounceTimer;
+        // Snap Address Search
         addrInput.addEventListener('input', () => {
-            clearTimeout(debounceTimer);
             const query = addrInput.value;
-            if (query.length < 5) { previewBox.style.display = 'none'; return; }
+            if (query.length < 1) { previewBox.style.display = 'none'; return; }
 
-            debounceTimer = setTimeout(() => {
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=us&addressdetails=1&limit=5`)
-                    .then(res => res.json())
-                    .then(data => {
-                        previewBox.innerHTML = '';
-                        if (data.length > 0) {
-                            previewBox.style.display = 'block';
-                            data.forEach(place => {
-                                const div = document.createElement('div');
-                                div.className = 'preview-item';
-                                div.innerText = place.display_name.toUpperCase();
-                                div.onclick = () => {
-                                    addrInput.value = (place.address.house_number || '') + ' ' + (place.address.road || '');
-                                    document.getElementById('city-field').value = (place.address.city || place.address.town || '').toUpperCase();
-                                    document.getElementById('state-field').value = getStateAbbr(place.address.state);
-                                    document.getElementById('zip-field').value = place.address.postcode || '';
-                                    previewBox.style.display = 'none';
-                                    calculateRealShipping(place.lat, place.lon);
-                                };
-                                previewBox.appendChild(div);
-                            });
-                        }
-                    });
-            }, 300);
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=us&addressdetails=1&limit=6`)
+                .then(res => res.json())
+                .then(data => {
+                    previewBox.innerHTML = '';
+                    if (data.length > 0 && addrInput.value.length > 0) {
+                        previewBox.style.display = 'block';
+                        data.forEach(place => {
+                            const a = place.address;
+                            const street = (a.house_number || '') + ' ' + (a.road || '');
+                            const city = a.city || a.town || a.village || '';
+                            const state = a.state || '';
+                            const zip = a.postcode || '';
+                            
+                            const div = document.createElement('div');
+                            div.className = 'preview-item';
+                            div.innerText = `${street}, ${city}, ${state} ${zip}`.replace(/,,/g, ',').trim();
+                            div.onclick = () => {
+                                addrInput.value = street.toUpperCase();
+                                document.getElementById('city-field').value = city.toUpperCase();
+                                document.getElementById('state-field').value = getStateAbbr(state);
+                                document.getElementById('zip-field').value = zip;
+                                previewBox.style.display = 'none';
+                                calculateRealDistance(parseFloat(place.lat), parseFloat(place.lon));
+                            };
+                            previewBox.appendChild(div);
+                        });
+                    } else { previewBox.style.display = 'none'; }
+                });
         });
 
-        function calculateRealShipping(lat, lon) {
-            const R = 3958.8; // Miles
-            const dLat = (lat - ITHACA.lat) * Math.PI / 180;
-            const dLon = (lon - ITHACA.lon) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(ITHACA.lat * Math.PI/180) * Math.cos(lat * Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        function calculateRealDistance(lat2, lon2) {
+            // Haversine Formula for ACTUAL distance
+            const R = 3958.8; // Radius of Earth in miles
+            const dLat = (lat2 - ITHACA.lat) * Math.PI / 180;
+            const dLon = (lon2 - ITHACA.lon) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(ITHACA.lat * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             const miles = R * c;
 
-            // Logic: $5 base + $0.05 per mile. 
-            // Ithaca to LA is ~2800 miles = $140 shipping. Expensive!
-            const shipping = 5.00 + (miles * 0.05);
-            
-            document.getElementById('sub-val').innerText = `$${subtotal.toFixed(2)}`;
+            // Logic-based Estimator
+            let shipping = 15.00;
+            if (miles < 50) shipping = 5.00;       // Very Local
+            else if (miles < 300) shipping = 12.00; // Regional (Syracuse/NYC/Philly)
+            else if (miles < 1000) shipping = 25.00; // Midwest/South
+            else shipping = 45.00;                  // West Coast/Remote
+
             document.getElementById('ship-val').innerText = `$${shipping.toFixed(2)}`;
             document.getElementById('total-val').innerText = `$${(subtotal + shipping).toFixed(2)}`;
+            document.getElementById('dist-msg').innerText = `Est. Distance: ${Math.round(miles)} miles from Ithaca`;
         }
 
-        function getStateAbbr(stateName) {
-            const states = { "New York": "NY", "California": "CA", "Florida": "FL", "Texas": "TX" }; // Simplified for demo
-            return states[stateName] || stateName;
+        function getStateAbbr(n) {
+            const states = {'New York':'NY','California':'CA','Pennsylvania':'PA','Florida':'FL','Texas':'TX','New Jersey':'NJ','Illinois':'IL','Washington':'WA','Massachusetts':'MA'};
+            return states[n] || n.substring(0,2).toUpperCase();
         }
 
         document.getElementById('sub-val').innerText = `$${subtotal.toFixed(2)}`;
+        document.getElementById('total-val').innerText = `$${subtotal.toFixed(2)}`;
+
+        // Hide previews when clicking away
+        window.addEventListener('click', (e) => {
+            if (!addrInput.contains(e.target) && !previewBox.contains(e.target)) {
+                previewBox.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
